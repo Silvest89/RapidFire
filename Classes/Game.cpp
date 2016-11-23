@@ -44,6 +44,7 @@ bool Game::init()
 	listener->setSwallowTouches(true);
 
 	listener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
+	getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
 	// create a TMX map
 	map = TMXTiledMap::create("maps/map.tmx");
@@ -89,7 +90,10 @@ bool Game::init()
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(Game::onContactBegin, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);	
-
+	Point test = positionCoordForTile(Point(4, 47));
+	CCLOG("Characters: %f %f", test.x, test.y);
+	test = tileCoordForPosition(Point(635, 273));
+	CCLOG("Characters: %f %f", test.x, test.y);
 	return true;
 }
 
@@ -132,6 +136,7 @@ void Game::update(float delta)
 		player->setCanJump(false);
 	}
 	setViewPointCenter(player->getPosition());
+	
 }
 
 void Game::setViewPointCenter(Point position) {
@@ -152,6 +157,21 @@ void Game::setViewPointCenter(Point position) {
 
 bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 {
-	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
+	Point point = tileCoordForPosition(touch->getLocation());
+	CCLOG("onTouchBegan x = %f, y = %f", point.x, point.y);
 	return true;
+}
+
+Point Game::tileCoordForPosition(Point position)
+{
+	int x = position.x / map->getTileSize().width;
+	int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) / map->getTileSize().height;
+	return Point(x, y);
+}
+
+Point Game::positionCoordForTile(Point position)
+{
+	int x = position.x * map->getTileSize().width;
+	int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) * map->getTileSize().height;
+	return Point(x, y);
 }

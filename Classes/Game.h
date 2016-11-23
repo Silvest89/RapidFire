@@ -21,6 +21,8 @@ public:
 	TMXTiledMap *map;
 
 	void setViewPointCenter(Point position);
+	Point tileCoordForPosition(Point position);
+	Point positionCoordForTile(Point position);
 
 private:
 	cocos2d::PhysicsWorld *physicsWorld;
