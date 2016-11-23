@@ -1,21 +1,31 @@
 #include "Player.h"
+#include "enums.h"
 
 USING_NS_CC;
 
 Player::Player(std::string name)
 {
-	playerSprite = Sprite::create("CloseNormal.png");
+	this->initWithFile("CloseNormal.png");
+	auto spriteBody = PhysicsBody::createBox(getContentSize(), PhysicsMaterial(0, 1, 0.5f));
+	spriteBody->setRotationEnable(false);
+	spriteBody->setCategoryBitmask(CATEGORY_PLAYER);
+	spriteBody->setCollisionBitmask(CATEGORY_STATIC);
+	spriteBody->setContactTestBitmask(CATEGORY_STATIC);
 
-	auto spriteBody = PhysicsBody::createBox(playerSprite->getContentSize(), PhysicsMaterial(0, 1, 5));
-	playerSprite->setPhysicsBody(spriteBody);
+	setPhysicsBody(spriteBody);
+	jump = true;
 }
-
 
 Player::~Player()
 {
 }
 
-Sprite *Player::getSprite() 
+bool Player::canJump()
 {
-	return playerSprite;
+	return this->jump;
+}
+
+void Player::setCanJump(bool canJump)
+{
+	this->jump = canJump;
 }

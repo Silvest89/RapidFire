@@ -3,11 +3,9 @@
 
 #include "cocos2d.h"
 #include "Player.h"
-#include "SneakyButton.h"
-#include "SneakyButtonSkinnedBase.h"
-#include "SneakyJoystickSkinnedBase.h"
+#include "Controller.h"
 
-class Game :public cocos2d::Layer
+class Game : public cocos2d::Layer
 {
 public:
 	static cocos2d::Scene* createScene();
@@ -19,13 +17,16 @@ public:
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 	CREATE_FUNC(Game);
 
-	SneakyJoystick *leftJoystick;
-	SneakyButton *jumpBtn;
+	Controller *controller;
+	TMXTiledMap *map;
+
+	void setViewPointCenter(Point position);
 
 private:
 	cocos2d::PhysicsWorld *physicsWorld;
 
 	void setPhysicsWorld(cocos2d::PhysicsWorld *world) { physicsWorld = world; };
+	bool onContactBegin(cocos2d::PhysicsContact &contact);
 };
 
 #endif // __GAME_SCENE_H__

@@ -6,9 +6,11 @@
 USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(1280, 720);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+static cocos2d::Size smallResolutionSize = cocos2d::Size(960, 540);
+//static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
+static cocos2d::Size mediumResolutionSize = cocos2d::Size(1920, 1080);
+//static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(2560, 1440);
 
 typedef struct tagResource
 {
@@ -86,7 +88,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
 		//director->setContentScaleFactor(MIN(designResolutionSize.height / smallResolutionSize.height, designResolutionSize.width / smallResolutionSize.width));
     }
-	CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+	FileUtils::getInstance()->setSearchPaths(searchPaths);
     register_all_packages();
 
     // create a scene. it's an autorelease object

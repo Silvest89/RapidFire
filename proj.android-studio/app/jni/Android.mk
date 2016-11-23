@@ -17,6 +17,12 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/SplashScreen.cpp \
                    ../../../Classes/MainMenu.cpp \
                    ../../../Classes/Game.cpp \
+                   ../../../Classes/Player.cpp \
+                   ../../../Classes/SneakyButton.cpp \
+                   ../../../Classes/SneakyButtonSkinnedBase.cpp \
+                   ../../../Classes/SneakyJoystick.cpp \
+                   ../../../Classes/SneakyJoystickSkinnedBase.cpp \
+                   ../../../Classes/Controller.cpp \
                    ../../../vendor/entityx/entityx/Entity.cc  \
 					../../../vendor/entityx/entityx/Event.cc  \
 					../../../vendor/entityx/entityx/System.cc \
