@@ -6,7 +6,7 @@ USING_NS_CC;
 Player::Player(std::string name)
 {
 	this->initWithFile("CloseNormal.png");
-	auto spriteBody = PhysicsBody::createBox(getContentSize(), PhysicsMaterial(0, 1, 0.5f));
+	auto spriteBody = PhysicsBody::createBox(getContentSize(), PhysicsMaterial(0, 1, 0.6f));
 	spriteBody->setRotationEnable(false);
 	spriteBody->setCategoryBitmask(CATEGORY_PLAYER);
 	spriteBody->setCollisionBitmask(CATEGORY_STATIC);

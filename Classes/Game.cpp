@@ -90,10 +90,6 @@ bool Game::init()
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(Game::onContactBegin, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);	
-	Point test = positionCoordForTile(Point(4, 47));
-	CCLOG("Characters: %f %f", test.x, test.y);
-	test = tileCoordForPosition(Point(635, 273));
-	CCLOG("Characters: %f %f", test.x, test.y);
 	return true;
 }
 
@@ -104,13 +100,21 @@ bool Game::onContactBegin(cocos2d::PhysicsContact &contact)
 	if ((1 == a->getCollisionBitmask() && 2 == b->getCollisionBitmask()) || 
 		(2 == a->getCollisionBitmask() && 1 == b->getCollisionBitmask()))
 	{
+		const PhysicsContactData *contactData = contact.getContactData();
+		Point contactPoint = contactData->points[0];
+		
 		Player *player = (Player*)a->getOwner();
 		if (player) 
 		{
-			player->setCanJump(true);
+			if (contactPoint.y < player->getPosition().y)
+			{
+				CCLOG("Lower shape touched.");
+				//CCLOG("Player position %i", test);
+				player->setCanJump(true);
+			}
+			
 		}
 		
-		CCLOG("Collision");
 		return true;
 	}
 	return false;
@@ -159,6 +163,7 @@ bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 {
 	Point point = tileCoordForPosition(touch->getLocation());
 	CCLOG("onTouchBegan x = %f, y = %f", point.x, point.y);
+	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	return true;
 }
 
