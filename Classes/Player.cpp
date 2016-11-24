@@ -5,9 +5,11 @@ USING_NS_CC;
 
 Player::Player(std::string name)
 {
+	this->name = name;
 	this->initWithFile("CloseNormal.png");
 	auto spriteBody = PhysicsBody::createBox(getContentSize(), PhysicsMaterial(0, 1, 0.6f));
 	spriteBody->setRotationEnable(false);
+	spriteBody->setLinearDamping(0.2f);
 	spriteBody->setCategoryBitmask(CATEGORY_PLAYER);
 	spriteBody->setCollisionBitmask(CATEGORY_STATIC);
 	spriteBody->setContactTestBitmask(CATEGORY_STATIC);

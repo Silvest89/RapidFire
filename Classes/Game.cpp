@@ -18,7 +18,7 @@ Scene* Game::createScene()
 	scene->addChild(layer);
 
 	layer->controller = new Controller();
-	scene->addChild(layer->controller);
+	scene->addChild(layer->controller);	
 	// return the scene
 	return scene;
 }
@@ -35,11 +35,10 @@ bool Game::init()
 	//controller = new Controller();
 	//addChild(controller);
 
-	//Director::getInstance()->setContentScaleFactor(1);
+	Director::getInstance()->setContentScaleFactor(1);
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-
+	
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
 
@@ -48,7 +47,9 @@ bool Game::init()
 
 	// create a TMX map
 	map = TMXTiledMap::create("maps/map.tmx");
+	//addChild(map, -1);
 	addChild(map, -1);
+
 
 	scheduleUpdate();
 	auto edgeBody = PhysicsBody::createEdgeBox(map->getContentSize(), PHYSICSBODY_MATERIAL_DEFAULT, 3);
@@ -60,7 +61,6 @@ bool Game::init()
 
 	player = new Player("Johnnie");
 	player->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 600));
-
 	addChild(player);
 
 	//_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -97,22 +97,34 @@ bool Game::onContactBegin(cocos2d::PhysicsContact &contact)
 {
 	PhysicsBody *a = contact.getShapeA()->getBody();
 	PhysicsBody *b = contact.getShapeB()->getBody();
-	if ((1 == a->getCollisionBitmask() && 2 == b->getCollisionBitmask()) || 
-		(2 == a->getCollisionBitmask() && 1 == b->getCollisionBitmask()))
+	if ((a->getCategoryBitmask() & b->getCollisionBitmask()) || 
+		(a->getCollisionBitmask() & b->getCategoryBitmask()))
 	{
 		const PhysicsContactData *contactData = contact.getContactData();
 		Point contactPoint = contactData->points[0];
 		
-		Player *player = (Player*)a->getOwner();
-		if (player) 
+		if(a->getCategoryBitmask() & CATEGORY_PLAYER)
 		{
+			Player* playerTest = dynamic_cast<Player*>(a->getNode());
+			CCLOG("Player name: %s", playerTest->name.c_str());
+		}
+		if (b->getCategoryBitmask() & CATEGORY_PLAYER)
+		{
+			Player* playerTest = dynamic_cast<Player*>(b->getNode());
+			CCLOG("Player name: %s", playerTest->name.c_str());
+		}
+
+		
+		if (a->getCategoryBitmask() & CATEGORY_PLAYER || b->getCategoryBitmask() & CATEGORY_PLAYER)
+		{
+			
+			CCLOG("Lower shape touched %f %f.", contactPoint.y, player->getPosition().y);
 			if (contactPoint.y < player->getPosition().y)
 			{
-				CCLOG("Lower shape touched.");
+				CCLOG("Enable jumping.");
 				//CCLOG("Player position %i", test);
 				player->setCanJump(true);
-			}
-			
+			}			
 		}
 		
 		return true;
@@ -124,19 +136,19 @@ void Game::update(float delta)
 {
 	if (controller->leftJoystick->getVelocity().x > 0) {
 		CCLOG("Right");
-		player->getPhysicsBody()->applyForce(Vec2(150, 0));
+		player->getPhysicsBody()->applyForce(Vec2(250, 0));
 	}
 	if (controller->leftJoystick->getVelocity().x < 0) {
 		CCLOG("Left");
-		player->getPhysicsBody()->applyForce(Vec2(-150, 0));
+		player->getPhysicsBody()->applyForce(Vec2(-250, 0));
 	}
 	if (controller->leftJoystick->getVelocity().x == 0) {
 		//CCLOG("0");
 		//player->getSprite()->getPhysicsBody()->applyForce(Vec2(0, 0));
 	}
 	if (controller->jumpBtn->getValue() && player->canJump()) {
-		player->getPhysicsBody()->applyImpulse(Vec2(0, 200));
-		player->getPhysicsBody()->setVelocity(Vec2(0, 100));
+		player->getPhysicsBody()->applyImpulse(Vec2(0, 400));
+		player->getPhysicsBody()->setVelocity(Vec2(0, 150));
 		player->setCanJump(false);
 	}
 	setViewPointCenter(player->getPosition());
@@ -146,6 +158,7 @@ void Game::update(float delta)
 void Game::setViewPointCenter(Point position) {
 
 	Size winSize = Director::getInstance()->getWinSize();
+	//winSize = Vec2(960, 500);
 
 	float x = MAX(position.x, winSize.width / 2);
 	float y = MAX(position.y, winSize.height / 2);
@@ -161,22 +174,24 @@ void Game::setViewPointCenter(Point position) {
 
 bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 {
-	Point point = tileCoordForPosition(touch->getLocation());
+	Point point = worldToTilePosition(touch->getLocation());
+	Point point2 = tileToWorldPosition(point);
 	CCLOG("onTouchBegan x = %f, y = %f", point.x, point.y);
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
+	CCLOG("onTouchBegan x = %f, y = %f", point2.x, point2.y);
 	return true;
 }
 
-Point Game::tileCoordForPosition(Point position)
+Point Game::worldToTilePosition(Point position)
 {
 	int x = position.x / map->getTileSize().width;
 	int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) / map->getTileSize().height;
 	return Point(x, y);
 }
 
-Point Game::positionCoordForTile(Point position)
+Point Game::tileToWorldPosition(Point position)
 {
 	int x = position.x * map->getTileSize().width;
-	int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) * map->getTileSize().height;
+	int y = (((map->getMapSize().height*128) / map->getTileSize().width) - position.y) * map->getTileSize().width;
 	return Point(x, y);
 }

@@ -13,6 +13,7 @@ public:
 
 	bool canJump();
 	void setCanJump(bool canJump);
+	std::string name;
 
 private:
 	bool jump;

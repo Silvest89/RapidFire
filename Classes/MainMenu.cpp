@@ -57,6 +57,8 @@ void MainMenu::Play(cocos2d::Ref *pSender)
 {
 	CCLOG("Play");
 	auto newScene = Game::createScene();
+	//newScene->getDefaultCamera()->initOrthographic(960, 540, 1, 1000);
+	//newScene->getDefaultCamera()->setPosition(0, 0);
 	Director::getInstance()->replaceScene(newScene);
 }
 
