@@ -135,11 +135,9 @@ bool Game::onContactBegin(cocos2d::PhysicsContact &contact)
 void Game::update(float delta)
 {
 	if (controller->leftJoystick->getVelocity().x > 0) {
-		CCLOG("Right");
 		player->getPhysicsBody()->applyForce(Vec2(250, 0));
 	}
 	if (controller->leftJoystick->getVelocity().x < 0) {
-		CCLOG("Left");
 		player->getPhysicsBody()->applyForce(Vec2(-250, 0));
 	}
 	if (controller->leftJoystick->getVelocity().x == 0) {
@@ -152,6 +150,7 @@ void Game::update(float delta)
 		player->setCanJump(false);
 	}
 	setViewPointCenter(player->getPosition());
+	player->update();
 	
 }
 
@@ -179,6 +178,8 @@ bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 	CCLOG("onTouchBegan x = %f, y = %f", point.x, point.y);
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	CCLOG("onTouchBegan x = %f, y = %f", point2.x, point2.y);
+	Point test(5, 46);
+	player->moveTo(test);
 	return true;
 }
 
@@ -194,4 +195,29 @@ Point Game::tileToWorldPosition(Point position)
 	int x = position.x * map->getTileSize().width;
 	int y = (((map->getMapSize().height*128) / map->getTileSize().width) - position.y) * map->getTileSize().width;
 	return Point(x, y);
+}
+
+PointArray *Game::walkableAdjacentTilesCoordForTileCoord(const Point &tileCoord) const
+{
+	PointArray *tmp = PointArray::create(2);
+
+	bool l = false;
+	bool r = false;
+	Point p;
+
+	p.setPoint(tileCoord.x - 1, tileCoord.y);
+	//if (this->isValidTileCoord(p) && !this->isWallAtTileCoord(p))
+	//{
+		tmp->addControlPoint(p);
+		//l = true;
+	//}
+
+	p.setPoint(tileCoord.x + 1, tileCoord.y);
+	//if (this->isValidTileCoord(p) && !this->isWallAtTileCoord(p))
+	//{
+		tmp->addControlPoint(p);
+		//r = true;
+	//}
+
+	return tmp;
 }

@@ -48,6 +48,7 @@
     <ClCompile Include="..\Classes\Controller.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\pathfinding\PathFinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -89,6 +90,7 @@
     <ClInclude Include="..\Classes\enums.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\pathfinding\PathFinding.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

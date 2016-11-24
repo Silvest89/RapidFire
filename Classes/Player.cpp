@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "pathfinding\PathFinding.h"
 #include "enums.h"
 
 USING_NS_CC;
@@ -16,10 +17,27 @@ Player::Player(std::string name)
 
 	setPhysicsBody(spriteBody);
 	jump = true;
+	//this->state = AIState::STATE_FINDPATH;
+	//this->pathFind = new PathFinding(this);
 }
 
 Player::~Player()
 {
+}
+
+void Player::update()
+{
+	if (getPhysicsBody()->getVelocity().x > 1)
+	{
+	}
+	else if (getPhysicsBody()->getVelocity().x < -1)
+	{
+	}
+}
+
+void Player::moveTo(Point target)
+{
+	//pathFind->findPath(this->getPosition(), target);
 }
 
 bool Player::canJump()

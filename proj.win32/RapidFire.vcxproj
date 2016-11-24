@@ -151,6 +151,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Game.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
+    <ClCompile Include="..\Classes\pathfinding\PathFinding.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\SneakyButton.cpp" />
     <ClCompile Include="..\Classes\SneakyButtonSkinnedBase.cpp" />
@@ -166,6 +167,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Game.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\pathfinding\PathFinding.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\SneakyButton.h" />
     <ClInclude Include="..\Classes\SneakyButtonSkinnedBase.h" />

@@ -16,5 +16,4 @@ proj.win8.1-universal/*
 vendor/*
 proj.win32/RapidFire.VC.VC.opendb
 bin/*
-.cocos-project.json
 proj.android-studio/proj.android-studio.iml

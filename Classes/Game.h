@@ -23,6 +23,7 @@ public:
 	void setViewPointCenter(Point position);
 	Point worldToTilePosition(Point position);
 	Point tileToWorldPosition(Point position);
+	PointArray * walkableAdjacentTilesCoordForTileCoord(const Point & tileCoord) const;
 
 private:
 	cocos2d::PhysicsWorld *physicsWorld;
