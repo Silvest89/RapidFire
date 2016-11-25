@@ -2,10 +2,11 @@
 #define  __PLAYER_H__
 
 #include "cocos2d.h"
+#include "Entity/Creature.h"
 
 class PathFinding;
 
-class Player : public cocos2d::Sprite
+class Player : public Creature
 {
 public:
 	Player(std::string name);

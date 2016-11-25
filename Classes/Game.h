@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "Controller.h"
+#include <entityx/entityx.h>
 
 class Game : public cocos2d::Layer
 {
@@ -24,6 +25,8 @@ public:
 	Point worldToTilePosition(Point position);
 	Point tileToWorldPosition(Point position);
 	PointArray * walkableAdjacentTilesCoordForTileCoord(const Point & tileCoord) const;
+
+	entityx::EntityX ex;
 
 private:
 	cocos2d::PhysicsWorld *physicsWorld;

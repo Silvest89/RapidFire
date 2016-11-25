@@ -1,7 +1,12 @@
 #include "Game.h"
 #include "Controller.h"
 #include "enums.h"
+#include "Components/Position.h"
+#include "Systems/Movement.h"
+
+#include <entityx/entityx.h>
 USING_NS_CC;
+
 
 Scene* Game::createScene()
 {
@@ -39,6 +44,16 @@ bool Game::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	
+	ex.systems.add<Movement>();
+	ex.systems.configure();
+
+	entityx::Entity entity = ex.entities.create();
+	entity.assign<Position>(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 600);
+
+	ex.entities.each<Position>([this](entityx::Entity entity, Position &position) {
+			addChild(position.sprite);
+	});
+
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
 
@@ -134,6 +149,7 @@ bool Game::onContactBegin(cocos2d::PhysicsContact &contact)
 
 void Game::update(float delta)
 {
+	ex.systems.update_all(delta);
 	if (controller->leftJoystick->getVelocity().x > 0) {
 		player->getPhysicsBody()->applyForce(Vec2(250, 0));
 	}

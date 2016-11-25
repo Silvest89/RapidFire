@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "pathfinding\PathFinding.h"
+#include "AI\PathFinding.h"
 #include "enums.h"
 
 USING_NS_CC;
@@ -23,10 +23,12 @@ Player::Player(std::string name)
 
 Player::~Player()
 {
+	delete pathFind;
 }
 
 void Player::update()
 {
+
 	if (getPhysicsBody()->getVelocity().x > 1)
 	{
 	}
