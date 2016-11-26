@@ -2,6 +2,8 @@
 #include "Game.h"
 USING_NS_CC;
 
+Controller *Game::controller = 0;
+
 Scene* MainMenu::createScene()
 {
 	// 'scene' is an autorelease object
@@ -56,6 +58,7 @@ bool MainMenu::init()
 void MainMenu::Play(cocos2d::Ref *pSender)
 {
 	CCLOG("Play");
+	Game::controller = new Controller();
 	auto newScene = Game::createScene();
 	//newScene->getDefaultCamera()->initOrthographic(960, 540, 1, 1000);
 	//newScene->getDefaultCamera()->setPosition(0, 0);

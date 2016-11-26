@@ -74,7 +74,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=0;CC_ENABLE_BOX2D_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -116,7 +116,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=0;CC_ENABLE_BOX2D_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -146,37 +146,45 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Classes\AI\PathFinding.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\Controller.cpp" />
     <ClCompile Include="..\Classes\Entity\Creature.cpp" />
     <ClCompile Include="..\Classes\Game.cpp" />
+    <ClCompile Include="..\Classes\GLES-Render.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\Input\Controller.cpp" />
+    <ClCompile Include="..\Classes\Input\SneakyButton.cpp" />
+    <ClCompile Include="..\Classes\Input\SneakyButtonSkinnedBase.cpp" />
+    <ClCompile Include="..\Classes\Input\SneakyJoystick.cpp" />
+    <ClCompile Include="..\Classes\Input\SneakyJoystickSkinnedBase.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
-    <ClCompile Include="..\Classes\SneakyButton.cpp" />
-    <ClCompile Include="..\Classes\SneakyButtonSkinnedBase.cpp" />
-    <ClCompile Include="..\Classes\SneakyJoystick.cpp" />
-    <ClCompile Include="..\Classes\SneakyJoystickSkinnedBase.cpp" />
     <ClCompile Include="..\Classes\SplashScreen.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Classes\AI\PathFinding.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\Components\Position.h" />
-    <ClInclude Include="..\Classes\Controller.h" />
+    <ClInclude Include="..\Classes\Components\AIComponent.h" />
+    <ClInclude Include="..\Classes\Components\CreatureComponent.h" />
+    <ClInclude Include="..\Classes\Components\EnemyComponent.h" />
+    <ClInclude Include="..\Classes\Components\InputComponent.h" />
+    <ClInclude Include="..\Classes\Components\PhysicsBodyComponent.h" />
+    <ClInclude Include="..\Classes\Components\PlayerComponent.h" />
+    <ClInclude Include="..\Classes\Components\PositionComponent.h" />
+    <ClInclude Include="..\Classes\Components\SpriteComponent.h" />
     <ClInclude Include="..\Classes\Entity\Creature.h" />
     <ClInclude Include="..\Classes\enums.h" />
     <ClInclude Include="..\Classes\Game.h" />
+    <ClInclude Include="..\Classes\GLES-Render.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Input\Controller.h" />
+    <ClInclude Include="..\Classes\Input\SneakyButton.h" />
+    <ClInclude Include="..\Classes\Input\SneakyButtonSkinnedBase.h" />
+    <ClInclude Include="..\Classes\Input\SneakyJoystick.h" />
+    <ClInclude Include="..\Classes\Input\SneakyJoystickSkinnedBase.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\Player.h" />
-    <ClInclude Include="..\Classes\SneakyButton.h" />
-    <ClInclude Include="..\Classes\SneakyButtonSkinnedBase.h" />
-    <ClInclude Include="..\Classes\SneakyJoystick.h" />
-    <ClInclude Include="..\Classes\SneakyJoystickSkinnedBase.h" />
     <ClInclude Include="..\Classes\SplashScreen.h" />
+    <ClInclude Include="..\Classes\Systems\InputSystem.h" />
     <ClInclude Include="..\Classes\Systems\Movement.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

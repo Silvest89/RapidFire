@@ -3,8 +3,9 @@
 
 #include "cocos2d.h"
 #include "Player.h"
-#include "Controller.h"
+#include "Input/Controller.h"
 #include <entityx/entityx.h>
+#include "Box2D\Box2D.h"
 
 class Game : public cocos2d::Layer
 {
@@ -14,24 +15,27 @@ public:
 
 	void update(float) override;
 
-	Player* player;
+	
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 	CREATE_FUNC(Game);
 
-	Controller *controller;
+	static Controller *controller;
 	TMXTiledMap *map;
+
+	static b2World *world;
 
 	void setViewPointCenter(Point position);
 	Point worldToTilePosition(Point position);
 	Point tileToWorldPosition(Point position);
 	PointArray * walkableAdjacentTilesCoordForTileCoord(const Point & tileCoord) const;
 
+	virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
+
+	Player* player;
 	entityx::EntityX ex;
+	
 
 private:
-	cocos2d::PhysicsWorld *physicsWorld;
-
-	void setPhysicsWorld(cocos2d::PhysicsWorld *world) { physicsWorld = world; };
 	bool onContactBegin(cocos2d::PhysicsContact &contact);
 };
 

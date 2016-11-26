@@ -3,33 +3,28 @@
 
 #include "cocos2d.h"
 #include "Entity/Creature.h"
+#include <entityx/entityx.h>
+#include "Components\SpriteComponent.h"
 
-class PathFinding;
-
-class Player : public Creature
+class Player
 {
 public:
-	Player(std::string name);
+	Player(entityx::Entity entity);
 	~Player();
 
 	//cocos2d::Sprite *playerSprite;
 
 	//cocos2d::Sprite *getSprite();
 
-	PathFinding *pathFind;
-
-	bool canJump();
-	void setCanJump(bool canJump);
-	std::string name;
-
-	void update();
-
 	//AIState state;
-
-	void moveTo(cocos2d::Point target);
+	cocos2d::Point getPosition();
 
 private:
-	bool jump;
+
+	entityx::Entity entity;
+
+	entityx::ComponentHandle<SpriteComponent> spriteComponent;
+
 };
 
 #endif
