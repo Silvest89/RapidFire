@@ -3,9 +3,9 @@
 #include "cocos2d.h"
 
 struct SpriteComponent {
-	SpriteComponent(cocos2d::String spriteFile)
+	SpriteComponent(std::string spriteFile)
 	{
-		this->sprite = cocos2d::Sprite::create(spriteFile.getCString());
+		this->sprite = cocos2d::Sprite::create(spriteFile.c_str());
 		//sprite->setPosition(cocos2d::Point(x, y));
 	}
 

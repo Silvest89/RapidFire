@@ -160,7 +160,7 @@ void Game::update(float delta)
 	ex.systems.update_all(delta);
 	world->Step(delta, 10, 10);
 	setViewPointCenter(player->getPosition());
-	
+	world->DrawDebugData();
 	//player->update();
 	// Navigate all bodies of world
 	world->ClearForces(); // Clear forces of Body

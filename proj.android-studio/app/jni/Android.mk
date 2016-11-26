@@ -18,18 +18,23 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/MainMenu.cpp \
                    ../../../Classes/Game.cpp \
                    ../../../Classes/Player.cpp \
-                   ../../../Classes/SneakyButton.cpp \
-                   ../../../Classes/SneakyButtonSkinnedBase.cpp \
-                   ../../../Classes/SneakyJoystick.cpp \
-                   ../../../Classes/SneakyJoystickSkinnedBase.cpp \
-                   ../../../Classes/Controller.cpp \
+                   ../../../Classes/Input/SneakyButton.cpp \
+                   ../../../Classes/Input/SneakyButtonSkinnedBase.cpp \
+                   ../../../Classes/Input/SneakyJoystick.cpp \
+                   ../../../Classes/Input/SneakyJoystickSkinnedBase.cpp \
+                   ../../../Classes/Input/Controller.cpp \
+                   ../../../Classes/GLES-Render.cpp \
                    ../../../vendor/entityx/entityx/Entity.cc  \
 					../../../vendor/entityx/entityx/Event.cc  \
 					../../../vendor/entityx/entityx/System.cc \
 					../../../vendor/entityx/entityx/help/Pool.cc \
-					../../../vendor/entityx/entityx/help/Timer.cc 
+					../../../vendor/entityx/entityx/help/Timer.cc \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
+					$(LOCAL_PATH)/../../../Classes/AI \
+					$(LOCAL_PATH)/../../../Classes/Components \
+					$(LOCAL_PATH)/../../../Classes/Input \
+					$(LOCAL_PATH)/../../../Classes/Systems \
 					$(LOCAL_PATH)/../../../vendor/entityx
 
 # _COCOS_HEADER_ANDROID_BEGIN
