@@ -1,5 +1,6 @@
 #ifndef __PHYSICSBODYCOMPONENT_H__
 #define __PHYSICSBODYCOMPONENT_H__
+
 #include "cocos2d.h"
 #include "chipmunk.h"
 #include <entityx/entityx.h>

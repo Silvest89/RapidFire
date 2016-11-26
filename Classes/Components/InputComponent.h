@@ -1,3 +1,6 @@
+#ifndef __INPUTCOMPONENT_H__
+#define __INPUTCOMPONENT_H__
+
 #include "cocos2d.h"
 #include "Input/Controller.h"
 
@@ -8,3 +11,5 @@ struct InputComponent {
 
 	Controller *controller;
 };
+
+#endif

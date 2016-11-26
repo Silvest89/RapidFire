@@ -1,8 +1,9 @@
 #include "MainMenu.h"
-#include "Game.h"
+#include "GameController.h"
+
 USING_NS_CC;
 
-Controller *Game::controller = 0;
+//Controller *Game::controller = 0;
 
 Scene* MainMenu::createScene()
 {
@@ -58,10 +59,9 @@ bool MainMenu::init()
 void MainMenu::Play(cocos2d::Ref *pSender)
 {
 	CCLOG("Play");
-	Game::controller = new Controller();
-	auto newScene = Game::createScene();
-	//newScene->getDefaultCamera()->initOrthographic(960, 540, 1, 1000);
-	//newScene->getDefaultCamera()->setPosition(0, 0);
+	//Game::controller = new Controller();
+	auto newScene = GameController::createScene();
+	//auto newScene = InfiniteParallax::createScene();
 	Director::getInstance()->replaceScene(newScene);
 }
 

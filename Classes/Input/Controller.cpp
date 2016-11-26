@@ -26,7 +26,6 @@ bool Controller::init()
 
 	SneakyJoystickSkinnedBase *joystickBase = new SneakyJoystickSkinnedBase();
 	joystickBase->init();
-	//joystickBase->setPosition(joystickBasePosition);
 	joystickBase->setBackgroundSprite(Sprite::create("joystick/joystick-bg.png"));
 	joystickBase->setThumbSprite(Sprite::create("joystick/joystick-knob.png"));
 

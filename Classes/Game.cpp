@@ -1,38 +1,16 @@
 #include "Game.h"
 #include "Input/Controller.h"
 #include "enums.h"
-#include "Components/PositionComponent.h"
-#include "Components/SpriteComponent.h"
-#include "Components\PhysicsBodyComponent.h"
+#include "Components\RapidComponents.h"
 #include "Systems/Movement.h"
 #include "Systems/InputSystem.h"
-#include "chipmunk.h"
 #include <entityx/entityx.h>
 #include "Box2D\Box2D.h"
 #include "GLES-Render.h"
+#include "GameController.h"
+#include "HealthBar.h"
 
 USING_NS_CC;
-
-Scene* Game::createScene()
-{
-	// 'scene' is an autorelease object
-	auto scene = Scene::create();
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f));
-
-	// 'layer' is an autorelease object
-	auto layer = Game::create();
-	layer->setName("Game");
-	//layer->setPhysicsWorld(scene->getPhysicsWorld());
-
-	// add layer as a child to scene
-	scene->addChild(layer);
-
-	//layer->controller = new Controller();
-	scene->addChild(layer->controller);	
-	// return the scene
-	return scene;
-}
 
 bool Game::init()
 {
@@ -46,25 +24,32 @@ bool Game::init()
 	Director::getInstance()->setContentScaleFactor(1);
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
+
 	b2Vec2 gravity = b2Vec2(0.0f, -9.8f);
 	world = new b2World(gravity);
-	ex.systems.add<MovementSystem>();
+
 	ex.systems.add<InputSystem>();
+	ex.systems.add<MovementSystem>();
 	ex.systems.configure();
 	
 	entityx::Entity playerEntity = ex.entities.create();
-	//playerEntity.assign<PositionComponent>(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 600);
 	playerEntity.assign<SpriteComponent>("CloseNormal.png");
 
 	entityx::ComponentHandle<SpriteComponent> sprite = playerEntity.component<SpriteComponent>();
 	if (sprite) {
 		sprite->sprite->setPosition(Point(50, visibleSize.height / 2 + origin.y + 300));
 		addChild(sprite->sprite);
+		addChild(sprite->label);
 	}
+	playerEntity.assign<CreatureComponent>();
+	entityx::ComponentHandle<CreatureComponent> creature = playerEntity.component<CreatureComponent>();
+	if (creature) {
+		addChild(creature->bar);
+	}
+
 	player = new Player(playerEntity);
 	playerEntity.assign<PhysicsBodyComponent>(player);
-	playerEntity.assign<InputComponent>(controller);
+	playerEntity.assign<InputComponent>(GameController::controller);	
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
@@ -85,7 +70,7 @@ bool Game::init()
 		{
 			auto properties = object.asValueMap();
 
-			b2Body *ballBody; // Body of the ball
+			b2Body *mapBody; // Body of the ball
 			b2BodyDef bodyDef; // Define the above Body
 			b2FixtureDef fixtureDef; // Define some static features: friction, restitution, density, etc.
 			b2PolygonShape bodyShape; // the shape of body
@@ -106,12 +91,12 @@ bool Game::init()
 			bodyDef.position.Set((properties.at("x").asFloat() + properties.at("width").asFloat() / 2) / 32, (properties.at("y").asFloat() + properties.at("height").asFloat() / 2) / 32);
 
 			//ballBody
-			ballBody = world->CreateBody(&bodyDef); // Create Body
-			ballBody->CreateFixture(&fixtureDef); // Create static features
+			mapBody = world->CreateBody(&bodyDef); // Create Body
+			mapBody->CreateFixture(&fixtureDef); // Create static features
 		}
 	}
 
-	uint32 flags = 0;
+	/*uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
 	flags += b2Draw::e_jointBit;
 	flags += b2Draw::e_aabbBit;
@@ -121,7 +106,10 @@ bool Game::init()
 	auto debugDraw = new GLESDebugDraw(32);
 	debugDraw->SetFlags(flags);
 	world->SetDebugDraw(debugDraw);
-	world->DrawDebugData();
+	world->DrawDebugData();*/
+
+	//HealthBar *bar = new HealthBar();
+	//addChild(bar);
 
 	scheduleUpdate();
 
@@ -159,23 +147,8 @@ void Game::update(float delta)
 {
 	ex.systems.update_all(delta);
 	world->Step(delta, 10, 10);
-	setViewPointCenter(player->getPosition());
-	world->DrawDebugData();
-	//player->update();
-	// Navigate all bodies of world
-	world->ClearForces(); // Clear forces of Body
-	//world->DrawDebugData();  // Draw shapes to check collision in debug mode
-}
-
-void Game::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)
-{
-	cocos2d::Layer::draw(renderer, transform, flags);
-
-	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
-	Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-	world->DrawDebugData();
-
-	Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+	setViewPointCenter(player->getPosition());;
+	world->ClearForces();
 }
 
 void Game::setViewPointCenter(Point position) {
