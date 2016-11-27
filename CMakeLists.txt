@@ -65,6 +65,8 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
+set(USE_CHIPMUNK false)
+set(USE_BOX2D true)
 
 # Compiler options
 if(MSVC)
@@ -143,7 +145,7 @@ else()
     add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME} cocos2d box2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 

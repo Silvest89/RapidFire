@@ -6,11 +6,10 @@ Scene* InfiniteParallax::createScene()
 {
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f));
 
-	// 'layer' is an autorelease object
 	auto layer = InfiniteParallax::create();
-
-	// add layer as a child to scene
 	scene->addChild(layer);
 
 	// return the scene
@@ -41,10 +40,10 @@ bool InfiniteParallax::init()
 	sprite1 = Sprite::create("colored_grass.png");
 	float scale = MAX(visibleSize.width / sprite1->getContentSize().width, visibleSize.height / sprite1->getContentSize().height);
 	sprite1->setScale(scale);
-	addChild(sprite1, -1, Vec2(0.0f, 0.0f), Point((visibleSize.width / 2) + origin.x, (visibleSize.height / 2) + origin.y));
-	sprite2 = Sprite::create("closeNormal.png");
+	addChild(sprite1, -1, Vec2(0.0f, 0.0f), Point((visibleSize.width / 2) + origin.x, (visibleSize.height / 2) + origin.y + 100));
+	sprite2 = Sprite::create("CloseNormal.png");
 	sprite2->setPosition(Point((visibleSize.width / 2) + origin.x, (visibleSize.height / 2) + origin.y));
-	addChild(sprite2, 1, Vec2(0.1f, 0.1f), Point((visibleSize.width / 2) + origin.x, (visibleSize.height / 2) + origin.y - 100));
+	addChild(sprite2, 1, Vec2(0.1f, 0.1f), Point((visibleSize.width / 2) + origin.x, (visibleSize.height / 2) + origin.y - 50));
 
 	this->scheduleUpdate();
 

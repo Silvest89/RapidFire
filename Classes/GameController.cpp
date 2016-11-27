@@ -11,7 +11,8 @@ Controller *GameController::controller = 0;
 Scene* GameController::createScene()
 {
 	// 'scene' is an autorelease object
-	auto scene = Scene::create();
+	auto scene = Scene::createWithPhysics();
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98.0f));
 
@@ -43,7 +44,7 @@ bool GameController::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	auto parallaxLayer = InfiniteParallax::create();
-	addChild(parallaxLayer);
+	//addChild(parallaxLayer);
 
 	controller = new Controller();
 

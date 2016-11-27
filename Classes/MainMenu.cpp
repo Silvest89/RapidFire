@@ -1,6 +1,5 @@
 #include "MainMenu.h"
 #include "GameController.h"
-
 USING_NS_CC;
 
 //Controller *Game::controller = 0;

@@ -13,7 +13,8 @@ public:
 	HealthBar();
 	~HealthBar();
 
-	void setBarPosition(Point &position);
+	void setBarPosition(Vec2 position);
+	void updateHealth(int health, int maxhealth);
 
 
 };

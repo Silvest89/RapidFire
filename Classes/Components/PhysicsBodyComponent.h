@@ -2,18 +2,14 @@
 #define __PHYSICSBODYCOMPONENT_H__
 
 #include "cocos2d.h"
-#include "chipmunk.h"
-#include <entityx/entityx.h>
-#include "player.h"
+#include "Player.h"
 #include "Game.h"
 #include "Box2D\Box2D.h"
-
-b2World *Game::world = 0;
 
 struct PhysicsBodyComponent {
 	PhysicsBodyComponent(Player *player)
 	{
-	 // Body of the ball
+		// Body of the ball
 		b2BodyDef bodyDef; // Define the above Body
 		b2FixtureDef fixtureDef; // Define some static features: friction, restitution, density, etc.
 		b2PolygonShape bodyShape; // the shape of body
@@ -32,7 +28,7 @@ struct PhysicsBodyComponent {
 		bodyDef.type = b2_dynamicBody; // Dynamic collision
 		bodyDef.userData = player; // Attach to Sprite ball
 
-								 // Set position, and remember to convert the unit
+								   // Set position, and remember to convert the unit
 		bodyDef.position.Set(player->getPosition().x / 32, player->getPosition().y / 32);
 
 		//ballBody
@@ -42,7 +38,6 @@ struct PhysicsBodyComponent {
 	}
 
 	b2Body *physicsBody;
-
 };
 
 #endif

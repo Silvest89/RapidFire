@@ -2,17 +2,30 @@
 #define __SPRITECOMPONENT_H__
 
 #include "cocos2d.h"
+#include "enums.h"
+#include "chipmunk_private.h"
+
+class Player;
+
+USING_NS_CC;
 
 struct SpriteComponent {
-	SpriteComponent(std::string spriteFile)
+	SpriteComponent(Player *player, std::string spriteFile)
 	{
-		this->sprite = cocos2d::Sprite::create(spriteFile.c_str());
-		//sprite->setPosition(cocos2d::Point(x, y));
+		this->sprite = Sprite::create(spriteFile.c_str());
+		/*auto spriteBody = PhysicsBody::createBox(sprite->getContentSize(), PhysicsMaterial(0, 0, 0.3f));
+		spriteBody->setRotationEnable(false);
+		spriteBody->setCategoryBitmask(CATEGORY_PLAYER);
+		spriteBody->setCollisionBitmask(CATEGORY_STATIC);
+		spriteBody->setContactTestBitmask(CATEGORY_STATIC);
+		spriteBody->setLinearDamping(0.5f);
+
+		//spriteBody->getCPBody()->userData = player;
+		sprite->setPhysicsBody(spriteBody);
+		//sprite->setPosition(cocos2d::Point(x, y));*/
 		//label = cocos2d::Label::createWithTTF("Johnnie Ho", "fonts/Marker Felt.ttf", 14);
-		label = cocos2d::Label::createWithBMFont("fonts/test.fnt", "Johnnie Ho");
-		label->setColor(cocos2d::Color3B(0, 0, 0));		
 	}
-	cocos2d::Label *label;
+	
 	cocos2d::Sprite *sprite;
 };
 

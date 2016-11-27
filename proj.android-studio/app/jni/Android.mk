@@ -13,7 +13,6 @@ LOCAL_MODULE_FILENAME := libMyGame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
-                   ../../../Classes/HelloWorldScene.cpp \
                    ../../../Classes/SplashScreen.cpp \
                    ../../../Classes/MainMenu.cpp \
                    ../../../Classes/Game.cpp \
@@ -23,6 +22,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Input/SneakyJoystick.cpp \
                    ../../../Classes/Input/SneakyJoystickSkinnedBase.cpp \
                    ../../../Classes/Input/Controller.cpp \
+                   ../../../Classes/HealthBar.cpp \
+                   ../../../Classes/GameController.cpp \
+                   ../../../Classes/InfiniteParallax.cpp \
                    ../../../Classes/GLES-Render.cpp \
                    ../../../vendor/entityx/entityx/Entity.cc  \
 					../../../vendor/entityx/entityx/Event.cc  \

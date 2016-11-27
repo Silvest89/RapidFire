@@ -2,8 +2,9 @@
 #define __CREATURE_H__
 
 #include "cocos2d.h"
+#include <entityx/entityx.h>
 
-class Creature : public cocos2d::Sprite
+class Creature : public entityx::Entity
 {
 public:
 	Creature();

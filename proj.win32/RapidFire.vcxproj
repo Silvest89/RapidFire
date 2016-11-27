@@ -74,7 +74,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=0;CC_ENABLE_BOX2D_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BOX2D_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -147,7 +147,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\Entity\Creature.cpp" />
     <ClCompile Include="..\Classes\Game.cpp" />
     <ClCompile Include="..\Classes\GameController.cpp" />
     <ClCompile Include="..\Classes\GLES-Render.cpp" />
@@ -160,7 +159,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Input\SneakyJoystick.cpp" />
     <ClCompile Include="..\Classes\Input\SneakyJoystickSkinnedBase.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
+    <ClCompile Include="..\Classes\PhysicsLoader.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\Rube\b2dJson.cpp" />
+    <ClCompile Include="..\Classes\Rube\b2dJsonImage.cpp" />
+    <ClCompile Include="..\Classes\Rube\jsoncpp.cpp" />
     <ClCompile Include="..\Classes\SplashScreen.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -175,7 +178,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Components\PositionComponent.h" />
     <ClInclude Include="..\Classes\Components\RapidComponents.h" />
     <ClInclude Include="..\Classes\Components\SpriteComponent.h" />
-    <ClInclude Include="..\Classes\Entity\Creature.h" />
     <ClInclude Include="..\Classes\enums.h" />
     <ClInclude Include="..\Classes\Game.h" />
     <ClInclude Include="..\Classes\GameController.h" />
@@ -189,10 +191,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Input\SneakyJoystick.h" />
     <ClInclude Include="..\Classes\Input\SneakyJoystickSkinnedBase.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
+    <ClInclude Include="..\Classes\PhysicsLoader.h" />
     <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\Rube\b2dJson.h" />
+    <ClInclude Include="..\Classes\Rube\b2dJsonImage.h" />
+    <ClInclude Include="..\Classes\Rube\json\json-forwards.h" />
+    <ClInclude Include="..\Classes\Rube\json\json.h" />
     <ClInclude Include="..\Classes\SplashScreen.h" />
     <ClInclude Include="..\Classes\Systems\InputSystem.h" />
-    <ClInclude Include="..\Classes\Systems\Movement.h" />
+    <ClInclude Include="..\Classes\Systems\RenderSystem.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

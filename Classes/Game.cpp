@@ -2,15 +2,42 @@
 #include "Input/Controller.h"
 #include "enums.h"
 #include "Components\RapidComponents.h"
-#include "Systems/Movement.h"
+#include "Systems/RenderSystem.h"
 #include "Systems/InputSystem.h"
 #include <entityx/entityx.h>
-#include "Box2D\Box2D.h"
-#include "GLES-Render.h"
 #include "GameController.h"
 #include "HealthBar.h"
+#include "Player.h"
+#include "GLES-Render.h"
+
+#include "PhysicsLoader.h"
+
+#include "Box2D\Box2D.h"
 
 USING_NS_CC;
+
+b2World *Game::world = 0;
+
+Scene* Game::createScene()
+{
+	// 'scene' is an autorelease object
+	auto scene = Scene::createWithPhysics();
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	
+	//scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
+
+	// 'layer' is an autorelease object
+	auto layer = Game::create();
+	//layer->setPhysicsWorld(scene->getPhysicsWorld());
+
+	// add layer as a child to scene
+	scene->addChild(layer);
+
+	//layer->controller = new Controller();
+	//scene->addChild(layer->controller);
+	// return the scene
+	return scene;
+}
 
 bool Game::init()
 {
@@ -29,27 +56,29 @@ bool Game::init()
 	world = new b2World(gravity);
 
 	ex.systems.add<InputSystem>();
-	ex.systems.add<MovementSystem>();
+	ex.systems.add<RenderSystem>();
 	ex.systems.configure();
 	
-	entityx::Entity playerEntity = ex.entities.create();
-	playerEntity.assign<SpriteComponent>("CloseNormal.png");
+	player = new Player();
 
+	entityx::Entity playerEntity = ex.entities.create();
+
+	playerEntity.assign<SpriteComponent>(player, "CloseNormal.png");
 	entityx::ComponentHandle<SpriteComponent> sprite = playerEntity.component<SpriteComponent>();
 	if (sprite) {
 		sprite->sprite->setPosition(Point(50, visibleSize.height / 2 + origin.y + 300));
 		addChild(sprite->sprite);
-		addChild(sprite->label);
 	}
 	playerEntity.assign<CreatureComponent>();
 	entityx::ComponentHandle<CreatureComponent> creature = playerEntity.component<CreatureComponent>();
 	if (creature) {
-		addChild(creature->bar);
+		addChild(creature->getNameLabel());
+		addChild(creature->getHealthBar());
 	}
-
-	player = new Player(playerEntity);
+	player->setEntity(playerEntity);
 	playerEntity.assign<PhysicsBodyComponent>(player);
 	playerEntity.assign<InputComponent>(GameController::controller);	
+	//player->setEntity(playerEntity);
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
@@ -61,6 +90,12 @@ bool Game::init()
 	map = TMXTiledMap::create("maps/map.tmx");
 	addChild(map, -1);
 
+	auto edgeBody = PhysicsBody::createEdgeBox(map->getContentSize(), PHYSICSBODY_MATERIAL_DEFAULT, 3);
+	auto edgeNode = Node::create();
+	edgeNode->setPosition(Point(map->getContentSize().width / 2, map->getContentSize().height / 2));
+	edgeNode->setPhysicsBody(edgeBody);
+	addChild(edgeNode);
+
 	// loop over the object groups in this tmx file
 	auto objectGroups = map->getObjectGroups();
 	for (auto& objectGroup : objectGroups)
@@ -70,7 +105,7 @@ bool Game::init()
 		{
 			auto properties = object.asValueMap();
 
-			b2Body *mapBody; // Body of the ball
+			b2Body *ballBody; // Body of the ball
 			b2BodyDef bodyDef; // Define the above Body
 			b2FixtureDef fixtureDef; // Define some static features: friction, restitution, density, etc.
 			b2PolygonShape bodyShape; // the shape of body
@@ -84,19 +119,57 @@ bool Game::init()
 			fixtureDef.filter.maskBits = CATEGORY_PLAYER;
 			fixtureDef.shape = &bodyShape; // point to bodyShape
 
-			//bodyDef
+										   //bodyDef
 			bodyDef.type = b2_staticBody; // Dynamic collision
 
-			// Set position, and remember to convert the unit
+										  // Set position, and remember to convert the unit
 			bodyDef.position.Set((properties.at("x").asFloat() + properties.at("width").asFloat() / 2) / 32, (properties.at("y").asFloat() + properties.at("height").asFloat() / 2) / 32);
 
 			//ballBody
-			mapBody = world->CreateBody(&bodyDef); // Create Body
-			mapBody->CreateFixture(&fixtureDef); // Create static features
+			ballBody = world->CreateBody(&bodyDef); // Create Body
+			ballBody->CreateFixture(&fixtureDef); // Create static features
 		}
 	}
+	testSprite = Sprite::create("Sprite-PNG-Clipart.png");
+	testSprite->setPosition(150, 380);
 
-	/*uint32 flags = 0;
+	// Body of the ball
+	b2BodyDef bodyDef; // Define the above Body
+	b2FixtureDef fixtureDef; // Define some static features: friction, restitution, density, etc.
+	b2PolygonShape bodyShape; // the shape of body
+
+	bodyShape.SetAsBox(0.5f, 0.5f);
+
+	//fixtureDef
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.0f;
+	fixtureDef.restitution = 0.2f;
+	fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+	fixtureDef.filter.maskBits = CATEGORY_STATIC;
+	fixtureDef.shape = &bodyShape; // point to bodyShape
+
+								   //bodyDef
+	bodyDef.type = b2_dynamicBody; // Dynamic collision
+	//bodyDef.userData = player; // Attach to Sprite ball
+
+							   // Set position, and remember to convert the unit
+	bodyDef.position.Set((testSprite->getPosition().x - 103) / 32, (testSprite->getPosition().y - 103) / 32);
+
+	//ballBody
+	test = world->CreateBody(&bodyDef); // Create Body
+	//test->CreateFixture(&fixtureDef); // Create static features
+
+	PhysicsLoader *loader = new PhysicsLoader();
+	loader->addShapesWithFile("test.plist");
+	b2BodyDef bodyDef2;
+	//bodyDef2.position.Set(testSprite->getPosition().x / 32, testSprite->getPosition().y / 32);
+	//bodyDef2.type = b2_dynamicBody;
+	//test = world->CreateBody(&bodyDef2);
+
+	loader->addFixturesToBody(test, "Sprite-PNG-Clipart");
+	
+	addChild(testSprite);
+	uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
 	flags += b2Draw::e_jointBit;
 	flags += b2Draw::e_aabbBit;
@@ -105,50 +178,51 @@ bool Game::init()
 	flags += b2Draw::e_aabbBit;
 	auto debugDraw = new GLESDebugDraw(32);
 	debugDraw->SetFlags(flags);
-	world->SetDebugDraw(debugDraw);
-	world->DrawDebugData();*/
-
-	//HealthBar *bar = new HealthBar();
-	//addChild(bar);
+    world->SetDebugDraw(debugDraw);
+	//world->DrawDebugData();
 
 	scheduleUpdate();
 
 	return true;
 }
 
-bool Game::onContactBegin(cocos2d::PhysicsContact &contact)
-{
-	PhysicsBody *a = contact.getShapeA()->getBody();
-	PhysicsBody *b = contact.getShapeB()->getBody();
-	if ((a->getCategoryBitmask() & b->getCollisionBitmask()) || 
-		(a->getCollisionBitmask() & b->getCategoryBitmask()))
-	{
-		//const PhysicsContactData *contactData = contact.getContactData();
-		//Point contactPoint = contactData->points[0];
-		
-		if (a->getCategoryBitmask() & CATEGORY_PLAYER || b->getCategoryBitmask() & CATEGORY_PLAYER)
-		{
-			
-			//CCLOG("Lower shape touched %f %f.", contactPoint.y, player->getPosition().y);
-			/*if (contactPoint.y < player->getPosition().y)
-			{
-				CCLOG("Enable jumping.");
-				//CCLOG("Player position %i", test);
-				//player->setCanJump(true);
-			}	*/		
-		}
-		
-		return true;
-	}
-	return false;
-}
-
 void Game::update(float delta)
 {
-	ex.systems.update_all(delta);
-	world->Step(delta, 10, 10);
-	setViewPointCenter(player->getPosition());;
-	world->ClearForces();
+	//accumulator += delta;
+	/*if (getScene()->getPhysicsWorld()->isAutoStep())
+	{
+		getScene()->getPhysicsWorld()->setAutoStep(false);
+		//getScene()->getPhysicsWorld()->setSubsteps(5);
+	}*/
+	
+
+	//while (accumulator >= delta) {
+		ex.systems.update_all(delta);
+		CCLOG("body %f %f", test->GetPosition().x, test->GetPosition().y);
+		CCLOG("test %f %f", testSprite->getPosition().x, testSprite->getPosition().y);
+
+		test->ApplyForceToCenter(b2Vec2(5.0f, 0), true);
+		world->Step(1/60.0f, 8, 5);
+		//getScene()->getPhysicsWorld()->step(delta);
+	    setViewPointCenter(player->getPosition());
+		testSprite->setPosition(Vec2((test->GetPosition().x) * 32 + 103, (test->GetPosition().y) * 32 + 103));
+		//accumulator -= delta;
+		world->ClearForces();
+		//setViewPointCenter(player->getPosition());
+	//}
+		
+
+}
+
+void Game::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)
+ { 
+	cocos2d::Layer::draw(renderer, transform, flags);
+	
+		GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
+	Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+	world->DrawDebugData();
+	
+		Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void Game::setViewPointCenter(Point position) {

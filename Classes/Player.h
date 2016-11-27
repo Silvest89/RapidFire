@@ -2,14 +2,13 @@
 #define  __PLAYER_H__
 
 #include "cocos2d.h"
-#include "Entity/Creature.h"
 #include <entityx/entityx.h>
 #include "Components\SpriteComponent.h"
 
 class Player
 {
 public:
-	Player(entityx::Entity entity);
+	Player();
 	~Player();
 
 	//cocos2d::Sprite *playerSprite;
@@ -18,6 +17,9 @@ public:
 
 	//AIState state;
 	cocos2d::Point getPosition();
+	cocos2d::Vec3 getPosition3D();
+
+	void setEntity(entityx::Entity entity);
 
 private:
 

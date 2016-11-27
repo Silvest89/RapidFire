@@ -22,6 +22,9 @@
     <Filter Include="src\Input">
       <UniqueIdentifier>{7e3ff16e-7808-4c1d-8fd6-51eada675f61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Rube">
+      <UniqueIdentifier>{229000bd-d7e1-4bf2-81e1-60ef3f498fb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,9 +44,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Game.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Entity\Creature.cpp">
-      <Filter>src\Entity</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\Entity</Filter>
@@ -75,6 +75,18 @@
     <ClCompile Include="..\Classes\HealthBar.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Rube\b2dJson.cpp">
+      <Filter>src\Rube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Rube\b2dJsonImage.cpp">
+      <Filter>src\Rube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Rube\jsoncpp.cpp">
+      <Filter>src\Rube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PhysicsLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -98,14 +110,8 @@
     <ClInclude Include="..\Classes\enums.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Entity\Creature.h">
-      <Filter>src\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
       <Filter>src\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Systems\Movement.h">
-      <Filter>src\Systems</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Components\PositionComponent.h">
       <Filter>src\Components</Filter>
@@ -163,6 +169,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Components\RapidComponents.h">
       <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Systems\RenderSystem.h">
+      <Filter>src\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Rube\b2dJson.h">
+      <Filter>src\Rube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Rube\b2dJsonImage.h">
+      <Filter>src\Rube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Rube\json\json.h">
+      <Filter>src\Rube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Rube\json\json-forwards.h">
+      <Filter>src\Rube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PhysicsLoader.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

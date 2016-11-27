@@ -31,8 +31,14 @@ HealthBar::~HealthBar()
 {
 }
 
-void HealthBar::setBarPosition(Point &position)
+void HealthBar::setBarPosition(Vec2 position)
 {
 	healthBarBG->setPosition(position);
 	healthBarFG->setPosition(position);
+}
+
+void HealthBar::updateHealth(int health, int maxHealth)
+{
+	float percent = (float)health / maxHealth * 100;
+	healthBarFG->setPercent(percent);
 }
