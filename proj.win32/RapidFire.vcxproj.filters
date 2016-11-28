@@ -22,18 +22,12 @@
     <Filter Include="src\Input">
       <UniqueIdentifier>{7e3ff16e-7808-4c1d-8fd6-51eada675f61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Rube">
-      <UniqueIdentifier>{229000bd-d7e1-4bf2-81e1-60ef3f498fb2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SplashScreen.cpp">
@@ -75,15 +69,6 @@
     <ClCompile Include="..\Classes\HealthBar.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Rube\b2dJson.cpp">
-      <Filter>src\Rube</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Rube\b2dJsonImage.cpp">
-      <Filter>src\Rube</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Rube\jsoncpp.cpp">
-      <Filter>src\Rube</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PhysicsLoader.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -93,9 +78,6 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SplashScreen.h">
@@ -172,18 +154,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Systems\RenderSystem.h">
       <Filter>src\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Rube\b2dJson.h">
-      <Filter>src\Rube</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Rube\b2dJsonImage.h">
-      <Filter>src\Rube</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Rube\json\json.h">
-      <Filter>src\Rube</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Rube\json\json-forwards.h">
-      <Filter>src\Rube</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PhysicsLoader.h">
       <Filter>src</Filter>

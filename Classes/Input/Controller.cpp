@@ -45,7 +45,7 @@ bool Controller::init()
 
 	Rect jumpButtonDimensions = Rect(0, 0, 64.0f, 64.0f);
 	Point jumpButtonPosition;
-	jumpButtonPosition = Vec2(visibleSize.width - 50, 15);
+	jumpButtonPosition = Vec2(visibleSize.width - 50, 30);
 
 	SneakyButtonSkinnedBase *jumpButtonBase = new SneakyButtonSkinnedBase();
 	jumpButtonBase->init();

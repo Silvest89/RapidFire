@@ -1,5 +1,8 @@
 #include "PhysicsLoader.h"
 #include "Box2D/Box2D.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/document.h"
+#include <cstdio>
 
 
 /**
@@ -204,6 +207,149 @@ void PhysicsLoader::addShapesWithFile(const std::string &plist)
             m_shapeObjects[bodyName] = bodyDef;
         }
     }
+}
+
+void PhysicsLoader::addShapesWithJSON(const std::string &plist, b2FixtureDef &data)
+{
+	std::string fullName = FileUtils::getInstance()->fullPathForFilename(plist);
+
+	std::string content = FileUtils::getInstance()->getStringFromFile(fullName);
+
+	//CCLOG("%s", content.c_str());
+
+	rapidjson::StringStream s(content.c_str());
+	rapidjson::Document document;
+	document.ParseStream(s);
+
+	const rapidjson::Value& rigidBodies = document["rigidBodies"];
+
+	m_ptmRatio = 6.5f;
+	b2Vec2 vertices[b2_maxPolygonVertices];
+
+	for (rapidjson::SizeType i = 0; i < rigidBodies.Size(); i++) // Uses SizeType instead of size_t
+	{
+		std::string bodyName = rigidBodies[i]["name"].GetString();
+
+		BodyDef *bodyDef = new BodyDef();
+		std::string content = { "0", "0" };
+
+		FixtureDef **nextFixtureDef = &(bodyDef->fixtures);
+
+		const rapidjson::Value& polygons = rigidBodies[i]["polygons"];
+
+		for (rapidjson::SizeType f = 0; f < polygons.Size(); f++)
+		{
+			b2FixtureDef basicData = data;
+
+			/*basicData.filter.categoryBits = Value(fixtureData["filter_categoryBits"]).asInt();
+			basicData.filter.maskBits = Value(fixtureData["filter_maskBits"]).asInt();
+			//basicData.filter.groupIndex = Value(fixtureData["filter_groupIndex"]).asInt();
+			basicData.friction = Value(fixtureData["friction"]).asFloat();
+			basicData.density = Value(fixtureData["density"]).asFloat();
+			basicData.restitution = Value(fixtureData["restitution"]).asFloat();
+			basicData.isSensor = (bool)Value(fixtureData["isSensor"]).asBool();*/
+			FixtureDef *fix = new FixtureDef();
+			fix->fixture = basicData; // copy basic data
+
+			b2PolygonShape *polyshape = new b2PolygonShape();
+			int vindex = 0;
+
+			const rapidjson::Value& polygonItem = polygons[i];
+			for (const rapidjson::Value& pItem : polygonItem.GetArray())
+			{
+				Vec2 offset = Vec2(pItem["x"].GetFloat(), pItem["y"].GetFloat());
+				vertices[vindex].x = (offset.x * m_ptmRatio);
+				vertices[vindex].y = (offset.y * m_ptmRatio);
+				vindex++;
+			}
+			/*for (rapidjson::SizeType g = 0; g < polygonItem.Size(); g++)
+			{
+				Vec2 offset = Vec2(polygonItem[i]["x"].GetFloat(), polygonItem[i]["y"].GetFloat());
+				vertices[vindex].x = (offset.x * m_ptmRatio);
+				vertices[vindex].y = (offset.y * m_ptmRatio);
+				vindex++;
+				CCLOG("TEST %f", polygonItem[i]["y"].GetFloat());
+			}*/
+			polyshape->Set(vertices, vindex);
+			fix->fixture.shape = polyshape;
+			 //create a list
+			*nextFixtureDef = fix;
+			nextFixtureDef = &(fix->next);
+		}
+		m_shapeObjects[bodyName] = bodyDef;
+	}
+	//JSONArray test = root.find(L"rigidBodies")->second->AsArray();
+
+
+	/*Json::Value root;
+	Json::Reader reader;
+
+	std::ifstream file(plist, std::ifstream::binary);
+
+	Json::CharReaderBuilder rbuilder;
+	// Configure the Builder, then ...
+	std::string errs;
+	bool parsingSuccessful = Json::parseFromStream(rbuilder, file, &root, &errs);
+	if (!parsingSuccessful)
+	{
+		// report to the user the failure and their locations in the document.
+		CCLOG("lolError: %s", errs.c_str());
+		return;
+	}
+	if(root["rigidBodies"].isArray())
+		CCLOG("TEST: ");
+
+
+	/*if (!reader.parse(file, root, true)) {
+		CCLOG("Failed to parse %s", reader.getFormattedErrorMessages().c_str());
+	}
+	return;
+	if (root.size() > 0) 
+	{
+		m_ptmRatio = 6.5f;
+		b2Vec2 vertices[b2_maxPolygonVertices];
+		for (const Json::Value& rootItem : root["rigidBodies"])
+		{
+			std::string bodyName = rootItem["name"].asString();
+
+			BodyDef *bodyDef = new BodyDef();
+			std::string content = { "0", "0" };
+
+			FixtureDef **nextFixtureDef = &(bodyDef->fixtures);
+
+			for (const Json::Value& polygonItem : rootItem["polygons"])
+			{
+				b2FixtureDef basicData = data;
+
+				/*basicData.filter.categoryBits = Value(fixtureData["filter_categoryBits"]).asInt();
+				basicData.filter.maskBits = Value(fixtureData["filter_maskBits"]).asInt();
+				//basicData.filter.groupIndex = Value(fixtureData["filter_groupIndex"]).asInt();
+				basicData.friction = Value(fixtureData["friction"]).asFloat();
+				basicData.density = Value(fixtureData["density"]).asFloat();
+				basicData.restitution = Value(fixtureData["restitution"]).asFloat();
+				basicData.isSensor = (bool)Value(fixtureData["isSensor"]).asBool();
+				FixtureDef *fix = new FixtureDef();
+				fix->fixture = basicData; // copy basic data
+
+				b2PolygonShape *polyshape = new b2PolygonShape();
+				int vindex = 0;
+
+				for (const Json::Value& pItem : polygonItem)
+				{
+					Vec2 offset = Vec2(pItem["x"].asFloat(), pItem["y"].asFloat());
+					vertices[vindex].x = (offset.x * m_ptmRatio);
+					vertices[vindex].y = (offset.y * m_ptmRatio);
+					vindex++;
+				}
+				polyshape->Set(vertices, vindex);
+				fix->fixture.shape = polyshape;
+				// create a list
+				*nextFixtureDef = fix;
+				nextFixtureDef = &(fix->next);
+			}
+			m_shapeObjects[bodyName] = bodyDef;
+		}
+	}*/
 }
 
 float PhysicsLoader::getPtmRatio() const

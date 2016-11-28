@@ -44,7 +44,7 @@ bool GameController::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	auto parallaxLayer = InfiniteParallax::create();
-	//addChild(parallaxLayer);
+	addChild(parallaxLayer);
 
 	controller = new Controller();
 

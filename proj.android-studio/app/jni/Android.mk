@@ -26,6 +26,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/GameController.cpp \
                    ../../../Classes/InfiniteParallax.cpp \
                    ../../../Classes/GLES-Render.cpp \
+                   ../../../Classes/PhysicsLoader.cpp \
                    ../../../vendor/entityx/entityx/Entity.cc  \
 					../../../vendor/entityx/entityx/Event.cc  \
 					../../../vendor/entityx/entityx/System.cc \
@@ -37,7 +38,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
 					$(LOCAL_PATH)/../../../Classes/Components \
 					$(LOCAL_PATH)/../../../Classes/Input \
 					$(LOCAL_PATH)/../../../Classes/Systems \
-					$(LOCAL_PATH)/../../../vendor/entityx
+					$(LOCAL_PATH)/../../../Classes/rapidjson \
+					$(LOCAL_PATH)/../../../vendor \
+					$(LOCAL_PATH)/../../../vendor/entityx \
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END

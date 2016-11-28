@@ -32,7 +32,7 @@ struct PhysicsBodyComponent {
 		bodyDef.position.Set(player->getPosition().x / 32, player->getPosition().y / 32);
 
 		//ballBody
-		physicsBody = Game::world->CreateBody(&bodyDef); // Create Body
+		physicsBody = Game::_game->getPhysicsWorld()->CreateBody(&bodyDef); // Create Body
 		physicsBody->CreateFixture(&fixtureDef); // Create static features
 		physicsBody->SetLinearDamping(1.0f);
 	}

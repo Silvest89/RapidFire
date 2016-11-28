@@ -12,11 +12,14 @@ struct InputSystem : public entityx::System<InputSystem> {
 			}
 		   else if(input.controller->leftJoystick->getVelocity().x > 0)
 			   physicsBody.physicsBody->ApplyForce(b2Vec2(8.0f, 0.0f), physicsBody.physicsBody->GetWorldCenter(), true);
-			/*if (controller->jumpBtn->getValue() && player->canJump()) {
-				player->getPhysicsBody()->applyImpulse(Vec2(0, 400));
-				player->getPhysicsBody()->setVelocity(Vec2(0, 150));
-				player->setCanJump(false);
-			}*/
+			
+			if (input.controller->jumpBtn->getValue()) {
+				CCLOG("TEST");
+				physicsBody.physicsBody->ApplyLinearImpulseToCenter(b2Vec2(0, 10.0f), true);
+				//physicsBody.physicsBody->SetLinearVelocity(b2Vec2(0, 8.0f));
+				//physicsBody.physicsBody->SetLinearVelocity
+			}
+
 		});
 	};
 };

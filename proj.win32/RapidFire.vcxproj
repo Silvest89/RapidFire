@@ -64,7 +64,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>D:\Programming\Projects\RapidFire\vendor\entityx\build\Debug;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\Programming\Projects\RapidFire\vendor\entityx;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Programming\Projects\RapidFire\vendor\entityx;D:\Programming\Projects\RapidFire\vendor;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;D:\Programming\Projects\RapidFire\vendor\entityx\build\Release;$(LibraryPath)</LibraryPath>
@@ -151,7 +151,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\GameController.cpp" />
     <ClCompile Include="..\Classes\GLES-Render.cpp" />
     <ClCompile Include="..\Classes\HealthBar.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\InfiniteParallax.cpp" />
     <ClCompile Include="..\Classes\Input\Controller.cpp" />
     <ClCompile Include="..\Classes\Input\SneakyButton.cpp" />
@@ -161,9 +160,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\PhysicsLoader.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
-    <ClCompile Include="..\Classes\Rube\b2dJson.cpp" />
-    <ClCompile Include="..\Classes\Rube\b2dJsonImage.cpp" />
-    <ClCompile Include="..\Classes\Rube\jsoncpp.cpp" />
     <ClCompile Include="..\Classes\SplashScreen.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -183,7 +179,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\GameController.h" />
     <ClInclude Include="..\Classes\GLES-Render.h" />
     <ClInclude Include="..\Classes\HealthBar.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\InfiniteParallax.h" />
     <ClInclude Include="..\Classes\Input\Controller.h" />
     <ClInclude Include="..\Classes\Input\SneakyButton.h" />
@@ -193,10 +188,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\PhysicsLoader.h" />
     <ClInclude Include="..\Classes\Player.h" />
-    <ClInclude Include="..\Classes\Rube\b2dJson.h" />
-    <ClInclude Include="..\Classes\Rube\b2dJsonImage.h" />
-    <ClInclude Include="..\Classes\Rube\json\json-forwards.h" />
-    <ClInclude Include="..\Classes\Rube\json\json.h" />
     <ClInclude Include="..\Classes\SplashScreen.h" />
     <ClInclude Include="..\Classes\Systems\InputSystem.h" />
     <ClInclude Include="..\Classes\Systems\RenderSystem.h" />
