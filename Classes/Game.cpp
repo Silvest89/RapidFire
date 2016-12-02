@@ -6,14 +6,19 @@
 #include "Systems/InputSystem.h"
 #include <entityx/entityx.h>
 #include "GameController.h"
-#include "HealthBar.h"
+#include "CreatureBar.h"
 #include "Player.h"
 #include "GLES-Render.h"
 
 #include "PhysicsLoader.h"
 #include "Box2D\Box2D.h"
 #include <fstream>
+
+#include <spine/spine-cocos2dx.h>
+
 USING_NS_CC;
+
+using namespace spine;
 
 Game *Game::_game = 0;
 
@@ -29,7 +34,7 @@ bool Game::init()
 	_game = this;
 	Director::getInstance()->setContentScaleFactor(1);
 	
-	this->setupPhysicsWorld(true);
+	this->setupPhysicsWorld(false);
 	this->setupECS();
     this->loadMap();
 
@@ -39,7 +44,7 @@ bool Game::init()
 	listener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
 	getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);*/
 
-	{
+	/*{
 		testSprite = Sprite::create("Sprite-PNG-Clipart.png");
 		testSprite->setPosition(150, 380);
 
@@ -85,11 +90,30 @@ bool Game::init()
 		//bLoader->attachFixture(test, "Name", fixtureDef, 32.0f);
 
 		addChild(testSprite);
-	}
+	}*/
+	auto layer1 = LayerGradient::create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255));
+	layer1->setContentSize(Size(80, 80));
+	layer1->setPosition(Vec2(50, 50));
+	addChild(layer1);
+
+	//auto skeletonNode = SkeletonAnimation::createWithJsonFile("spineboy.json", "spineboy.atlas", 0.2f);
+	auto skeletonNode = SkeletonAnimation::createWithBinaryFile("spineboy.skel", "spineboy.atlas", 0.4f);
+	skeletonNode->setPosition(Vec2(1050, 370));
+	spTrackEntry *test = skeletonNode->setAnimation(0, "idle", true);
+	skeletonNode->setScaleX(-1);
+	skeletonNode->setTrackEventListener(test, [this](spTrackEntry * entry, spEvent * event) {
+		this->goTest(entry, event);
+	});
+	addChild(skeletonNode);
 
 	this->scheduleUpdate();
 
 	return true;
+}
+
+void Game::goTest(spTrackEntry * entry, spEvent * event)
+{
+	log("%d event: %s, %d, %f, %s", entry->trackIndex, event->data->name, event->intValue, event->floatValue, event->stringValue);
 }
 
 void Game::update(float delta)
@@ -98,7 +122,7 @@ void Game::update(float delta)
 	ex.systems.update_all(delta);
 	//CCLOG("body %f %f", test->GetPosition().x, test->GetPosition().y);
 	//CCLOG("test %f %f", testSprite->getPosition().x, testSprite->getPosition().y);
-	getPhysicsWorld()->Step(1/60.0f, 8, 5);
+	getPhysicsWorld()->Step(1/60.0f, 8, 3);
 	setViewPointCenter(player->getPosition());
 	//testSprite->setPosition(Vec2((test->GetPosition().x) * 32 + 103, (test->GetPosition().y) * 32 + 103));
 	getPhysicsWorld()->ClearForces();
@@ -109,16 +133,20 @@ void Game::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uin
  { 
 	Layer::draw(renderer, transform, flags);
 	
-	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
-	Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-	getPhysicsWorld()->DrawDebugData();
-	Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+	if (physicsDebug)
+	{
+		GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
+		Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+		getPhysicsWorld()->DrawDebugData();
+		Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+	}
 }
 
 void Game::setupPhysicsWorld(bool debugDraw) 
 {
 	b2Vec2 gravity = b2Vec2(0.0f, -9.8f);
 	physicsWorld = new b2World(gravity);
+	physicsDebug = debugDraw;
 
 	if (debugDraw)
 	{
@@ -159,11 +187,11 @@ void Game::setupECS()
 		sprite->sprite->setPosition(Point(50, visibleSize.height / 2 + origin.y + 300));
 		addChild(sprite->sprite);
 	}
-	playerEntity.assign<CreatureComponent>();
+	playerEntity.assign<CreatureComponent>("Johnnie Ho");
 	entityx::ComponentHandle<CreatureComponent> creature = playerEntity.component<CreatureComponent>();
 	if (creature) {
-		addChild(creature->getNameLabel());
-		addChild(creature->getHealthBar());
+		//addChild(creature->getNameLabel());
+		addChild(creature->getBar());
 	}
 	player->setEntity(playerEntity);
 	playerEntity.assign<PhysicsBodyComponent>(player);
@@ -210,6 +238,11 @@ void Game::loadMap()
 			ballBody->CreateFixture(&fixtureDef); // Create static features
 		}
 	}
+	/*// all tiles are aliased by default, let's set them anti-aliased
+	for (const auto& child : tileMap->getChildren())
+	{
+		static_cast<SpriteBatchNode*>(child)->getTexture()->setAntiAliasTexParameters();
+	}*/
 }
 
 TMXTiledMap *Game::getMap()
@@ -231,7 +264,7 @@ void Game::setViewPointCenter(Point position) {
 	Vec2 centerOfView = Vec2(winSize.width / 2, winSize.height / 2);
 	Vec2 viewPoint;
 	Vec2::subtract(centerOfView, actualPosition, &viewPoint);
-	this->setPosition(viewPoint);
+	this->setPosition(Vec2(viewPoint.x, viewPoint.y - 256));
 }
 
 bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)

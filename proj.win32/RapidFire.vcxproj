@@ -64,11 +64,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>D:\Programming\Projects\RapidFire\vendor\entityx\build\Debug;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\Programming\Projects\RapidFire\vendor\entityx;D:\Programming\Projects\RapidFire\vendor;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Programming\Libraries\spine-runtimes\spine-cocos2dx\src;D:\Programming\Projects\RapidFire\vendor\entityx;D:\Programming\Projects\RapidFire\vendor;D:\Programming\Libraries\spine-runtimes\spine-c\spine-c\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;D:\Programming\Projects\RapidFire\vendor\entityx\build\Release;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\Programming\Projects\RapidFire\vendor\entityx;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Programming\Projects\RapidFire\vendor;D:\Programming\Projects\RapidFire\vendor\entityx;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -146,11 +146,49 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\AttachmentVertices.cpp" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\Cocos2dAttachmentLoader.cpp" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonAnimation.cpp" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonBatch.cpp" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonRenderer.cpp" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\spine-cocos2dx.cpp" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Animation.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AnimationState.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AnimationStateData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Atlas.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AtlasAttachmentLoader.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Attachment.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AttachmentLoader.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Bone.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\BoneData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\BoundingBoxAttachment.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Event.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\EventData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\extension.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\IkConstraint.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\IkConstraintData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Json.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\MeshAttachment.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\PathAttachment.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\PathConstraint.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\PathConstraintData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\RegionAttachment.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Skeleton.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonBinary.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonBounds.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonJson.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Skin.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Slot.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SlotData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\TransformConstraint.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\TransformConstraintData.c" />
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\VertexAttachment.c" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Game.cpp" />
     <ClCompile Include="..\Classes\GameController.cpp" />
     <ClCompile Include="..\Classes\GLES-Render.cpp" />
-    <ClCompile Include="..\Classes\HealthBar.cpp" />
+    <ClCompile Include="..\Classes\CreatureBar.cpp" />
     <ClCompile Include="..\Classes\InfiniteParallax.cpp" />
     <ClCompile Include="..\Classes\Input\Controller.cpp" />
     <ClCompile Include="..\Classes\Input\SneakyButton.cpp" />
@@ -164,6 +202,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\AttachmentVertices.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\Cocos2dAttachmentLoader.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonAnimation.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonBatch.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonRenderer.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\spine-cocos2dx.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Json.h" />
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\kvec.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Components\AIComponent.h" />
     <ClInclude Include="..\Classes\Components\CreatureComponent.h" />
@@ -178,7 +224,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Game.h" />
     <ClInclude Include="..\Classes\GameController.h" />
     <ClInclude Include="..\Classes\GLES-Render.h" />
-    <ClInclude Include="..\Classes\HealthBar.h" />
+    <ClInclude Include="..\Classes\CreatureBar.h" />
     <ClInclude Include="..\Classes\InfiniteParallax.h" />
     <ClInclude Include="..\Classes\Input\Controller.h" />
     <ClInclude Include="..\Classes\Input\SneakyButton.h" />
@@ -197,9 +243,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\cocos2d\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
-      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
     </ProjectReference>
     <ProjectReference Include="..\cocos2d\external\Box2D\proj.win32\libbox2d.vcxproj">
       <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>

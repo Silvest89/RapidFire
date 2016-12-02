@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Input/Controller.h"
 #include "Box2D\Box2D.h"
+#include <spine/spine-cocos2dx.h>
 
 class Game : public cocos2d::Layer
 {
@@ -36,12 +37,15 @@ public:
 
 	static Game* _game;
 
+	void goTest(spTrackEntry* entry, spEvent* event);
 private:
 	b2World *physicsWorld;
 	TMXTiledMap *tileMap;
 
 	Player* player;
 	entityx::EntityX ex;
+
+	bool physicsDebug;
 
 
 

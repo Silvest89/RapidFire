@@ -1,13 +1,12 @@
 #include "cocos2d.h"
-#include "HealthBar.h"
+#include "CreatureBar.h"
 
 struct CreatureComponent {
-	CreatureComponent()
+	CreatureComponent(std::string name)
 	{
-		nameLabel = cocos2d::Label::createWithBMFont("fonts/test.fnt", "Johnnie Ho");
-		nameLabel->setColor(cocos2d::Color3B(0, 0, 0));
-		healthBar = new HealthBar();
+		creatureBar = new CreatureBar(name);
 
+		this->name = name;
 		this->health = 50;
 		this->maxHealth = 150;
 	}
@@ -28,14 +27,9 @@ public:
 		return maxHealth;
 	}
 
-	cocos2d::Label *getNameLabel()
+	CreatureBar *getBar()
 	{
-		return nameLabel;
-	}
-
-	HealthBar *getHealthBar()
-	{
-		return healthBar;
+		return creatureBar;
 	}
 
 	float getSpeed()
@@ -49,8 +43,7 @@ private:
 	std::string name;
 	int health, maxHealth;
 
-	cocos2d::Label *nameLabel;
-	HealthBar *healthBar;
+	CreatureBar *creatureBar;
 	float speed;
 
 

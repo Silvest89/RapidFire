@@ -1,8 +1,8 @@
-#include "HealthBar.h"
+#include "CreatureBar.h"
 
 using namespace ui;
 
-HealthBar::HealthBar()
+CreatureBar::CreatureBar(std::string name)
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -12,7 +12,7 @@ HealthBar::HealthBar()
 	healthBarBG->setDirection(LoadingBar::Direction::LEFT);
 	healthBarBG->setPercent(100);
 
-	healthBarBG->setPosition(Point(Point(180, visibleSize.height / 2 + origin.y + 200)));
+	healthBarBG->setPosition(Point(0, 0));
 	healthBarBG->setAnchorPoint(Vec2(0, 0));
 	addChild(healthBarBG);
 
@@ -21,23 +21,21 @@ HealthBar::HealthBar()
 	healthBarFG->setDirection(LoadingBar::Direction::LEFT);
 	healthBarFG->setPercent(100);
 
-	healthBarFG->setPosition(Point(Point(180, visibleSize.height / 2 + origin.y + 200)));
+	healthBarFG->setPosition(Point(Point(0, 0)));
 	healthBarFG->setAnchorPoint(Vec2(0, 0));
 	addChild(healthBarFG);
 
+	nameLabel = cocos2d::Label::createWithBMFont("fonts/test.fnt", name.c_str());
+	nameLabel->setColor(cocos2d::Color3B(0, 0, 0));
+	nameLabel->setPosition(Vec2(55, 30));
+	addChild(nameLabel);
 }
 
-HealthBar::~HealthBar()
+CreatureBar::~CreatureBar()
 {
 }
 
-void HealthBar::setBarPosition(Vec2 position)
-{
-	healthBarBG->setPosition(position);
-	healthBarFG->setPosition(position);
-}
-
-void HealthBar::updateHealth(int health, int maxHealth)
+void CreatureBar::updateHealth(int health, int maxHealth)
 {
 	float percent = (float)health / maxHealth * 100;
 	healthBarFG->setPercent(percent);

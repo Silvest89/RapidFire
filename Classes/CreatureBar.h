@@ -5,15 +5,16 @@
 #include "ui\CocosGUI.h"
 
 USING_NS_CC;
-class HealthBar : public cocos2d::Node
+class CreatureBar : public cocos2d::Node
 {
 public:
 	ui::LoadingBar* healthBarBG;
 	ui::LoadingBar* healthBarFG;
-	HealthBar();
-	~HealthBar();
+	cocos2d::Label *nameLabel;
 
-	void setBarPosition(Vec2 position);
+	CreatureBar(std::string name);
+	~CreatureBar();
+
 	void updateHealth(int health, int maxhealth);
 
 

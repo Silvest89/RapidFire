@@ -22,6 +22,12 @@
     <Filter Include="src\Input">
       <UniqueIdentifier>{7e3ff16e-7808-4c1d-8fd6-51eada675f61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\spine-c">
+      <UniqueIdentifier>{1039f263-3c45-4d30-8e6a-bb35b8f56176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\spine-cocos2dx">
+      <UniqueIdentifier>{80dfe696-7ca6-4b9a-b076-b7287a650820}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,11 +72,125 @@
     <ClCompile Include="..\Classes\GameController.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HealthBar.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\PhysicsLoader.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CreatureBar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AnimationState.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AnimationStateData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Atlas.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AtlasAttachmentLoader.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Attachment.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\AttachmentLoader.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Bone.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\BoneData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\BoundingBoxAttachment.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Event.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\EventData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\extension.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\IkConstraint.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\IkConstraintData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Json.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\MeshAttachment.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\PathAttachment.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\PathConstraint.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\PathConstraintData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\RegionAttachment.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Skeleton.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonBinary.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonBounds.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SkeletonJson.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Skin.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Slot.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\SlotData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\TransformConstraint.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\TransformConstraintData.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\VertexAttachment.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Animation.c">
+      <Filter>src\spine-c</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\AttachmentVertices.cpp">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\Cocos2dAttachmentLoader.cpp">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonAnimation.cpp">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonBatch.cpp">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonRenderer.cpp">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\spine-cocos2dx.cpp">
+      <Filter>src\spine-cocos2dx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +266,6 @@
     <ClInclude Include="..\Classes\GameController.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HealthBar.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Components\RapidComponents.h">
       <Filter>src\Components</Filter>
     </ClInclude>
@@ -157,6 +274,33 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PhysicsLoader.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CreatureBar.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\Json.h">
+      <Filter>src\spine-c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\kvec.h">
+      <Filter>src\spine-c</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\AttachmentVertices.h">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\Cocos2dAttachmentLoader.h">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonAnimation.h">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonBatch.h">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\SkeletonRenderer.h">
+      <Filter>src\spine-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\spine-cocos2dx.h">
+      <Filter>src\spine-cocos2dx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
