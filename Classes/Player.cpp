@@ -22,10 +22,6 @@ void Player::setEntity(entityx::Entity entity)
 }
 
 Point Player::getPosition() {
-	return spriteComponent->sprite->getPosition();
-}
-
-Vec3 Player::getPosition3D()
-{
-	return spriteComponent->sprite->getPosition3D();
+	if(spriteComponent)
+		return spriteComponent->sprite->getPosition();
 }

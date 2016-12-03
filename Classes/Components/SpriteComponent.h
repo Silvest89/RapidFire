@@ -10,6 +10,7 @@ class Player;
 USING_NS_CC;
 
 struct SpriteComponent {
+	Vec2 velocity;
 	SpriteComponent(Player *player, std::string spriteFile)
 	{
 		this->sprite = Sprite::create(spriteFile.c_str());

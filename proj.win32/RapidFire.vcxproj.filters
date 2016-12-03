@@ -227,9 +227,6 @@
     <ClInclude Include="..\Classes\Systems\InputSystem.h">
       <Filter>src\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Components\PhysicsBodyComponent.h">
-      <Filter>src\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Components\CreatureComponent.h">
       <Filter>src\Components</Filter>
     </ClInclude>
@@ -301,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-cocos2dx\src\spine\spine-cocos2dx.h">
       <Filter>src\spine-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\PhysicsBodyComponent.h">
+      <Filter>src\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

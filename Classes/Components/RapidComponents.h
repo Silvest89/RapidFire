@@ -2,8 +2,8 @@
 #define __RAPIDCOMPONENTS_H__
 
 #include "InputComponent.h"
-#include "PhysicsBodyComponent.h"
 #include "SpriteComponent.h"
 #include "CreatureComponent.h"
+#include "PhysicsBodyComponent.h"
 
 #endif //__RAPIDCOMPONENTS_H__

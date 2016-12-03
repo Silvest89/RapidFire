@@ -11,7 +11,6 @@
 #include "GLES-Render.h"
 
 #include "PhysicsLoader.h"
-#include "Box2D\Box2D.h"
 #include <fstream>
 
 #include <spine/spine-cocos2dx.h>
@@ -21,6 +20,7 @@ USING_NS_CC;
 using namespace spine;
 
 Game *Game::_game = 0;
+TMXTiledMap *Game::tileMap = 0;
 
 bool Game::init()
 {
@@ -33,7 +33,7 @@ bool Game::init()
 
 	_game = this;
 	Director::getInstance()->setContentScaleFactor(1);
-	
+
 	this->setupPhysicsWorld(false);
 	this->setupECS();
     this->loadMap();
@@ -99,11 +99,9 @@ bool Game::init()
 	//auto skeletonNode = SkeletonAnimation::createWithJsonFile("spineboy.json", "spineboy.atlas", 0.2f);
 	auto skeletonNode = SkeletonAnimation::createWithBinaryFile("spineboy.skel", "spineboy.atlas", 0.4f);
 	skeletonNode->setPosition(Vec2(1050, 370));
-	spTrackEntry *test = skeletonNode->setAnimation(0, "idle", true);
+	spTrackEntry *test = skeletonNode->setAnimation(0, "run", true);
 	skeletonNode->setScaleX(-1);
-	skeletonNode->setTrackEventListener(test, [this](spTrackEntry * entry, spEvent * event) {
-		this->goTest(entry, event);
-	});
+	skeletonNode->setTrackEventListener(test, CC_CALLBACK_2(Game::goTest, this));
 	addChild(skeletonNode);
 
 	this->scheduleUpdate();
@@ -113,36 +111,24 @@ bool Game::init()
 
 void Game::goTest(spTrackEntry * entry, spEvent * event)
 {
-	log("%d event: %s, %d, %f, %s", entry->trackIndex, event->data->name, event->intValue, event->floatValue, event->stringValue);
+	//log("%d event: %s, %d, %f, %s", entry->trackIndex, event->data->name, event->intValue, event->floatValue, event->stringValue);
 }
 
 void Game::update(float delta)
 {
 
 	ex.systems.update_all(delta);
+	getPhysicsWorld()->Step(1 / 60.0f, 8, 3);
+	setViewPointCenter(player->getPosition());
 	//CCLOG("body %f %f", test->GetPosition().x, test->GetPosition().y);
 	//CCLOG("test %f %f", testSprite->getPosition().x, testSprite->getPosition().y);
-	getPhysicsWorld()->Step(1/60.0f, 8, 3);
 	setViewPointCenter(player->getPosition());
-	//testSprite->setPosition(Vec2((test->GetPosition().x) * 32 + 103, (test->GetPosition().y) * 32 + 103));
 	getPhysicsWorld()->ClearForces();
+	//testSprite->setPosition(Vec2((test->GetPosition().x) * 32 + 103, (test->GetPosition().y) * 32 + 103));
 
 }
 
-void Game::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)
- { 
-	Layer::draw(renderer, transform, flags);
-	
-	if (physicsDebug)
-	{
-		GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
-		Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-		getPhysicsWorld()->DrawDebugData();
-		Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-	}
-}
-
-void Game::setupPhysicsWorld(bool debugDraw) 
+void Game::setupPhysicsWorld(bool debugDraw)
 {
 	b2Vec2 gravity = b2Vec2(0.0f, -9.8f);
 	physicsWorld = new b2World(gravity);
@@ -264,7 +250,7 @@ void Game::setViewPointCenter(Point position) {
 	Vec2 centerOfView = Vec2(winSize.width / 2, winSize.height / 2);
 	Vec2 viewPoint;
 	Vec2::subtract(centerOfView, actualPosition, &viewPoint);
-	this->setPosition(Vec2(viewPoint.x, viewPoint.y - 256));
+	this->setPosition(Vec2(viewPoint.x, viewPoint.y - 128));
 }
 
 bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)

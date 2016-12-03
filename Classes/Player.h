@@ -17,7 +17,6 @@ public:
 
 	//AIState state;
 	cocos2d::Point getPosition();
-	cocos2d::Vec3 getPosition3D();
 
 	void setEntity(entityx::Entity entity);
 

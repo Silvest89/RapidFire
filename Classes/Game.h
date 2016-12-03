@@ -16,38 +16,32 @@ public:
 	
 	CREATE_FUNC(Game);
 
-	b2Body *test;
-	Sprite *testSprite;
-
 	void setupPhysicsWorld(bool debugDraw);
 	b2World *getPhysicsWorld();
 	void setupECS();
 	void loadMap();
-	TMXTiledMap *getMap();
+	static TMXTiledMap *getMap();
+
 
 	void setViewPointCenter(Point position);
-	Point worldToTilePosition(Point position);
-	Point tileToWorldPosition(Point position);
+	static Point worldToTilePosition(Point position);
+	static Point tileToWorldPosition(Point position);
 
 	PointArray * walkableAdjacentTilesCoordForTileCoord(const Point & tileCoord) const;
 
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-
-	virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
 
 	static Game* _game;
 
 	void goTest(spTrackEntry* entry, spEvent* event);
 private:
 	b2World *physicsWorld;
-	TMXTiledMap *tileMap;
+	static TMXTiledMap *tileMap;
 
 	Player* player;
 	entityx::EntityX ex;
 
 	bool physicsDebug;
-
-
 
 };
 
