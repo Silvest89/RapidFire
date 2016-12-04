@@ -16,12 +16,9 @@ public:
 	
 	CREATE_FUNC(Game);
 
-	void setupPhysicsWorld(bool debugDraw);
-	b2World *getPhysicsWorld();
 	void setupECS();
 	void loadMap();
 	static TMXTiledMap *getMap();
-
 
 	void setViewPointCenter(Point position);
 	static Point worldToTilePosition(Point position);
@@ -32,10 +29,11 @@ public:
 	bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 
 	static Game* _game;
-
+	float angle;
+	Sprite *testSprite;
 	void goTest(spTrackEntry* entry, spEvent* event);
+
 private:
-	b2World *physicsWorld;
 	static TMXTiledMap *tileMap;
 
 	Player* player;

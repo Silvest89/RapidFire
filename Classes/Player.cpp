@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Components\SpriteComponent.h"
+#include "Components\SkeletonComponent.h"
 
 USING_NS_CC;
 
@@ -18,10 +18,11 @@ Player::~Player()
 void Player::setEntity(entityx::Entity entity)
 {
 	this->entity = entity;
-	spriteComponent = entity.component<SpriteComponent>();
+	skeletonComponent = entity.component<SkeletonComponent>();
 }
 
 Point Player::getPosition() {
-	if(spriteComponent)
-		return spriteComponent->sprite->getPosition();
+	if (skeletonComponent)
+		return skeletonComponent->skeleton->getPosition();
+	return Vec2(0, 0);
 }

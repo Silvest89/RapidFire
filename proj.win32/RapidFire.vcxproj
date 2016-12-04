@@ -215,10 +215,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Components\CreatureComponent.h" />
     <ClInclude Include="..\Classes\Components\EnemyComponent.h" />
     <ClInclude Include="..\Classes\Components\InputComponent.h" />
+    <ClInclude Include="..\Classes\Components\MovementComponent.h" />
     <ClInclude Include="..\Classes\Components\PhysicsBodyComponent.h" />
     <ClInclude Include="..\Classes\Components\PlayerComponent.h" />
     <ClInclude Include="..\Classes\Components\PositionComponent.h" />
     <ClInclude Include="..\Classes\Components\RapidComponents.h" />
+    <ClInclude Include="..\Classes\Components\SkeletonComponent.h" />
     <ClInclude Include="..\Classes\Components\SpriteComponent.h" />
     <ClInclude Include="..\Classes\enums.h" />
     <ClInclude Include="..\Classes\Game.h" />
@@ -236,6 +238,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\SplashScreen.h" />
     <ClInclude Include="..\Classes\Systems\InputSystem.h" />
+    <ClInclude Include="..\Classes\Systems\MovementSystem.h" />
     <ClInclude Include="..\Classes\Systems\RenderSystem.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

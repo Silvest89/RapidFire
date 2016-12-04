@@ -302,6 +302,15 @@
     <ClInclude Include="..\Classes\Components\PhysicsBodyComponent.h">
       <Filter>src\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Components\SkeletonComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\MovementComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Systems\MovementSystem.h">
+      <Filter>src\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

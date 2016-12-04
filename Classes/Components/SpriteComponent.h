@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "enums.h"
-#include "chipmunk_private.h"
 
 class Player;
 

@@ -4,6 +4,7 @@
 #include "Components\RapidComponents.h"
 #include "Systems/RenderSystem.h"
 #include "Systems/InputSystem.h"
+#include "Systems\MovementSystem.h"
 #include <entityx/entityx.h>
 #include "GameController.h"
 #include "CreatureBar.h"
@@ -34,15 +35,16 @@ bool Game::init()
 	_game = this;
 	Director::getInstance()->setContentScaleFactor(1);
 
-	this->setupPhysicsWorld(false);
+	//this->setupPhysicsWorld(false);
+	this->loadMap();
 	this->setupECS();
-    this->loadMap();
+    
 
-	/*auto listener = EventListenerTouchOneByOne::create();
+	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
 
 	listener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
-	getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);*/
+	getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
 	/*{
 		testSprite = Sprite::create("Sprite-PNG-Clipart.png");
@@ -96,14 +98,39 @@ bool Game::init()
 	layer1->setPosition(Vec2(50, 50));
 	addChild(layer1);
 
-	//auto skeletonNode = SkeletonAnimation::createWithJsonFile("spineboy.json", "spineboy.atlas", 0.2f);
+	//skeletonNode->setTrackEventListener(test, CC_CALLBACK_2(Game::goTest, this));
 	auto skeletonNode = SkeletonAnimation::createWithBinaryFile("spineboy.skel", "spineboy.atlas", 0.4f);
 	skeletonNode->setPosition(Vec2(1050, 370));
-	spTrackEntry *test = skeletonNode->setAnimation(0, "run", true);
-	skeletonNode->setScaleX(-1);
-	skeletonNode->setTrackEventListener(test, CC_CALLBACK_2(Game::goTest, this));
+	skeletonNode->setScaleX(-1);	
+	//spTrackEntry *test = skeletonNode->setAnimation(0, "idle", true);
+	//skeletonNode->setScaleX(-1);
+	/*skeletonNode->setTrackEventListener(test, [this](spTrackEntry * entry, spEvent * event) {
+		this->goTest(entry, event);
+	});*/
 	addChild(skeletonNode);
+	skeletonNode->update(0.0f);
 
+	spBone *rearBracer = skeletonNode->findBone("rear_upper_arm");
+	spBone *gunTip = skeletonNode->findBone("gunTip");
+
+	float rx, ry;
+
+	rx = skeletonNode->getPositionX() - rearBracer->worldX;
+	ry = skeletonNode->getPositionY() + rearBracer->worldY;
+	float x, y;
+
+	x = skeletonNode->getPositionX() - gunTip->worldX;
+	y = skeletonNode->getPositionY() + gunTip->worldY;
+	angle = atan2(y - ry, x - rx);
+	CCLOG("%f", angle);
+	auto subSprite = Sprite::create("CloseNormal.png");
+	subSprite->setPosition(rx, ry);
+	addChild(subSprite);
+	
+	testSprite = Sprite::create("CloseNormal.png");
+	testSprite->setRotation(-angle);
+	testSprite->setPosition(x, y); 
+	addChild(testSprite);
 	this->scheduleUpdate();
 
 	return true;
@@ -116,42 +143,17 @@ void Game::goTest(spTrackEntry * entry, spEvent * event)
 
 void Game::update(float delta)
 {
-
+	Vec2 position = testSprite->getPosition();
+	testSprite->setPosition(position.x + 50 * cos(angle) * delta, position.y + 50* sin(angle) * delta);
 	ex.systems.update_all(delta);
-	getPhysicsWorld()->Step(1 / 60.0f, 8, 3);
+	//getPhysicsWorld()->Step(1 / 60.0f, 8, 3);
 	setViewPointCenter(player->getPosition());
 	//CCLOG("body %f %f", test->GetPosition().x, test->GetPosition().y);
 	//CCLOG("test %f %f", testSprite->getPosition().x, testSprite->getPosition().y);
-	setViewPointCenter(player->getPosition());
-	getPhysicsWorld()->ClearForces();
+	//setViewPointCenter(player->getPosition());
+	//getPhysicsWorld()->ClearForces();
 	//testSprite->setPosition(Vec2((test->GetPosition().x) * 32 + 103, (test->GetPosition().y) * 32 + 103));
 
-}
-
-void Game::setupPhysicsWorld(bool debugDraw)
-{
-	b2Vec2 gravity = b2Vec2(0.0f, -9.8f);
-	physicsWorld = new b2World(gravity);
-	physicsDebug = debugDraw;
-
-	if (debugDraw)
-	{
-		uint32 flags = 0;
-		flags += b2Draw::e_shapeBit;
-		flags += b2Draw::e_jointBit;
-		/*flags += b2Draw::e_aabbBit;
-		flags += b2Draw::e_pairBit;
-		flags += b2Draw::e_centerOfMassBit;
-		flags += b2Draw::e_aabbBit;*/
-		auto debugDraw = new GLESDebugDraw(32);
-		debugDraw->SetFlags(flags);
-		getPhysicsWorld()->SetDebugDraw(debugDraw);
-	}
-}
-
-b2World *Game::getPhysicsWorld()
-{
-	return physicsWorld;
 }
 
 void Game::setupECS() 
@@ -160,6 +162,7 @@ void Game::setupECS()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	ex.systems.add<InputSystem>();
+	ex.systems.add<MovementSystem>();
 	ex.systems.add<RenderSystem>();
 	ex.systems.configure();
 
@@ -167,11 +170,11 @@ void Game::setupECS()
 
 	entityx::Entity playerEntity = ex.entities.create();
 
-	playerEntity.assign<SpriteComponent>(player, "CloseNormal.png");
-	entityx::ComponentHandle<SpriteComponent> sprite = playerEntity.component<SpriteComponent>();
-	if (sprite) {
-		sprite->sprite->setPosition(Point(50, visibleSize.height / 2 + origin.y + 300));
-		addChild(sprite->sprite);
+	playerEntity.assign<SkeletonComponent>("spineboy");
+	entityx::ComponentHandle<SkeletonComponent> skeletonCP = playerEntity.component<SkeletonComponent>();
+	if (skeletonCP) {
+		skeletonCP->skeleton->setPosition(Point(50, visibleSize.height / 2 + origin.y + 300));
+		addChild(skeletonCP->skeleton);
 	}
 	playerEntity.assign<CreatureComponent>("Johnnie Ho");
 	entityx::ComponentHandle<CreatureComponent> creature = playerEntity.component<CreatureComponent>();
@@ -180,7 +183,8 @@ void Game::setupECS()
 		addChild(creature->getBar());
 	}
 	player->setEntity(playerEntity);
-	playerEntity.assign<PhysicsBodyComponent>(player);
+	//playerEntity.assign<PhysicsBodyComponent>(player);
+	playerEntity.assign<MovementComponent>();
 	playerEntity.assign<InputComponent>(GameController::controller);
 }
 
@@ -190,7 +194,7 @@ void Game::loadMap()
 	tileMap = TMXTiledMap::create("maps/map.tmx");
 	addChild(tileMap, -1);
 
-	// loop over the object groups in this tmx file
+	/*// loop over the object groups in this tmx file
 	auto objectGroups = tileMap->getObjectGroups();
 	for (auto& objectGroup : objectGroups)
 	{
@@ -210,7 +214,7 @@ void Game::loadMap()
 			fixtureDef.friction = 0.7f;
 			//fixtureDef.restitution = 0.6;
 			fixtureDef.filter.categoryBits = CATEGORY_STATIC;
-			fixtureDef.filter.maskBits = CATEGORY_PLAYER;
+			fixtureDef.filter.maskBits = CATEGORY_PLAYER | GROUND_SENSOR;
 			fixtureDef.shape = &bodyShape; // point to bodyShape
 
 										   //bodyDef
@@ -223,7 +227,7 @@ void Game::loadMap()
 			ballBody = getPhysicsWorld()->CreateBody(&bodyDef); // Create Body
 			ballBody->CreateFixture(&fixtureDef); // Create static features
 		}
-	}
+	}*/
 	/*// all tiles are aliased by default, let's set them anti-aliased
 	for (const auto& child : tileMap->getChildren())
 	{
@@ -260,6 +264,7 @@ bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 	CCLOG("onTouchBegan x = %f, y = %f", point.x, point.y);
 	CCLOG("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	CCLOG("onTouchBegan x = %f, y = %f", point2.x, point2.y);
+
 	return true;
 }
 

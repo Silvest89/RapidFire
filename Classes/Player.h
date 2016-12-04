@@ -3,7 +3,8 @@
 
 #include "cocos2d.h"
 #include <entityx/entityx.h>
-#include "Components\SpriteComponent.h"
+#include "Components\SkeletonComponent.h"
+#include "Box2D\Box2D.h"
 
 class Player
 {
@@ -24,7 +25,7 @@ private:
 
 	entityx::Entity entity;
 
-	entityx::ComponentHandle<SpriteComponent> spriteComponent;
+	entityx::ComponentHandle<SkeletonComponent> skeletonComponent;
 
 };
 
