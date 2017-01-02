@@ -23,4 +23,10 @@ enum AnimationState {
 	STATE_JUMPING
 };
 
+enum WeaponType {
+	WEAPON_PISTOL,
+	WEAPON_LASER,
+	WEAPON_FLAME
+};
+
 #endif

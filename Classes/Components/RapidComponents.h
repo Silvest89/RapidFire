@@ -7,5 +7,7 @@
 #include "PhysicsBodyComponent.h"
 #include "SkeletonComponent.h"
 #include "MovementComponent.h"
+#include "WeaponComponent.h"
+#include "BulletComponent.h"
 
 #endif //__RAPIDCOMPONENTS_H__

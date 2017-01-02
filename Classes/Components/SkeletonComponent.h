@@ -19,7 +19,7 @@ struct SkeletonComponent {
 
 	SkeletonComponent(std::string skeletonFile)
 	{
-		skeleton = SkeletonAnimation::createWithBinaryFile("spineboy.skel", "spineboy.atlas", 0.4f);
+		skeleton = SkeletonAnimation::createWithBinaryFile("skeleton.skel", "skeleton.atlas", 0.5f);
 
 		skeleton->setMix("idle", "run", 0.3f);
 		skeleton->setMix("run", "idle", 0.1f);
@@ -28,6 +28,10 @@ struct SkeletonComponent {
 		gunTip = skeleton->findBone("gunTip");
 		rearBracer = skeleton->findBone("rear_bracer");
 		animationState = STATE_IDLE;
+
+		skeleton->setDebugBonesEnabled(true);
+		skeleton->setDebugSlotsEnabled(true);
+		
 	}
 	SkeletonAnimation *skeleton;
 

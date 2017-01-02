@@ -13,6 +13,7 @@ public:
 	virtual bool init();
 
 	SneakyJoystick *leftJoystick;
+	SneakyJoystick *rightJoystick;
 	SneakyButton *jumpBtn;
 };
 

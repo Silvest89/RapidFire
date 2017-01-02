@@ -5,6 +5,7 @@
 #include "Systems/RenderSystem.h"
 #include "Systems/InputSystem.h"
 #include "Systems\MovementSystem.h"
+#include "Systems\ProjectileSystem.h"
 #include <entityx/entityx.h>
 #include "GameController.h"
 #include "CreatureBar.h"
@@ -22,6 +23,7 @@ using namespace spine;
 
 Game *Game::_game = 0;
 TMXTiledMap *Game::tileMap = 0;
+entityx::EntityX Game::ex;
 
 bool Game::init()
 {
@@ -102,37 +104,42 @@ bool Game::init()
 	auto skeletonNode = SkeletonAnimation::createWithBinaryFile("spineboy.skel", "spineboy.atlas", 0.4f);
 	skeletonNode->setPosition(Vec2(1050, 370));
 	skeletonNode->setScaleX(-1);	
-	//spTrackEntry *test = skeletonNode->setAnimation(0, "idle", true);
+	spTrackEntry *test = skeletonNode->setAnimation(0, "idle", true);
 	//skeletonNode->setScaleX(-1);
 	/*skeletonNode->setTrackEventListener(test, [this](spTrackEntry * entry, spEvent * event) {
 		this->goTest(entry, event);
 	});*/
 	addChild(skeletonNode);
-	skeletonNode->update(0.0f);
+	//skeletonNode->update(0.0f);
 
 	spBone *rearBracer = skeletonNode->findBone("rear_upper_arm");
+	spBone *rearBracer2 = skeletonNode->findBone("rear_bracer");
+	rearBracer2->data->rotation = 50;
 	spBone *gunTip = skeletonNode->findBone("gunTip");
+	skeletonNode->updateWorldTransform();
+	skeletonNode->update(0.0f);
 
 	float rx, ry;
 
 	rx = skeletonNode->getPositionX() - rearBracer->worldX;
 	ry = skeletonNode->getPositionY() + rearBracer->worldY;
-	float x, y;
+	//angle = rearBracer2->data->rotation;
 
+	//skeletonNode->updateWorldTransform();
+	float x, y;
 	x = skeletonNode->getPositionX() - gunTip->worldX;
 	y = skeletonNode->getPositionY() + gunTip->worldY;
 	angle = atan2(y - ry, x - rx);
-	CCLOG("%f", angle);
+	//angle = 180 - angle;
 	auto subSprite = Sprite::create("CloseNormal.png");
 	subSprite->setPosition(rx, ry);
 	addChild(subSprite);
 	
 	testSprite = Sprite::create("CloseNormal.png");
-	testSprite->setRotation(-angle);
 	testSprite->setPosition(x, y); 
 	addChild(testSprite);
 	this->scheduleUpdate();
-
+	
 	return true;
 }
 
@@ -164,6 +171,7 @@ void Game::setupECS()
 	ex.systems.add<InputSystem>();
 	ex.systems.add<MovementSystem>();
 	ex.systems.add<RenderSystem>();
+	ex.systems.add<ProjectileSystem>();
 	ex.systems.configure();
 
 	player = new Player();
@@ -186,6 +194,7 @@ void Game::setupECS()
 	//playerEntity.assign<PhysicsBodyComponent>(player);
 	playerEntity.assign<MovementComponent>();
 	playerEntity.assign<InputComponent>(GameController::controller);
+	playerEntity.assign<WeaponComponent>(WEAPON_PISTOL);
 }
 
 void Game::loadMap()
@@ -254,7 +263,31 @@ void Game::setViewPointCenter(Point position) {
 	Vec2 centerOfView = Vec2(winSize.width / 2, winSize.height / 2);
 	Vec2 viewPoint;
 	Vec2::subtract(centerOfView, actualPosition, &viewPoint);
-	this->setPosition(Vec2(viewPoint.x, viewPoint.y - 128));
+	//this->setPosition(Vec2(viewPoint.x, snapTile - 128));
+
+	Vec2 test = convertToNodeSpace(position);
+	if (std::abs(viewPoint.x - this->getPositionX()) > 256 && !cameraRunning)
+	{
+		cameraRunning = true;
+	}
+
+	if (cameraRunning)
+	{
+		if (this->getPositionX() > (int)viewPoint.x)
+			this->setPositionX((int)this->getPositionX() - 3);
+		else if (this->getPositionX() < (int)viewPoint.x)
+			this->setPositionX((int)this->getPositionX() + 3);
+
+		if (std::abs(this->getPositionX() - viewPoint.x) <= 3)
+			cameraRunning = false;
+	}
+
+	int remainder = viewPoint.y / 128;
+	int snapY = (remainder - 2) * 128;
+	if (this->getPositionY() > snapY)
+		this->setPositionY(this->getPositionY() - 2);
+	else if (this->getPositionY() < snapY)
+		this->setPositionY(this->getPositionY() + 2);
 }
 
 bool Game::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)

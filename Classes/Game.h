@@ -20,6 +20,8 @@ public:
 	void loadMap();
 	static TMXTiledMap *getMap();
 
+	static entityx::EntityX ex;
+
 	void setViewPointCenter(Point position);
 	static Point worldToTilePosition(Point position);
 	static Point tileToWorldPosition(Point position);
@@ -37,7 +39,7 @@ private:
 	static TMXTiledMap *tileMap;
 
 	Player* player;
-	entityx::EntityX ex;
+	bool cameraRunning;
 
 	bool physicsDebug;
 

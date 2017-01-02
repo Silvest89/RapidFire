@@ -311,6 +311,15 @@
     <ClInclude Include="..\Classes\Systems\MovementSystem.h">
       <Filter>src\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Components\WeaponComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Components\BulletComponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Systems\ProjectileSystem.h">
+      <Filter>src\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

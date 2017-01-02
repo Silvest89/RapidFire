@@ -43,6 +43,28 @@ bool Controller::init()
 	leftJoystick->retain();
 	this->addChild(joystickBase);
 
+	Rect joystickBaseDimensions2;
+	joystickBaseDimensions2 = Rect(0, 0, 160.0f, 160.0f);
+
+	SneakyJoystickSkinnedBase *joystickBase2 = new SneakyJoystickSkinnedBase();
+	joystickBase2->init();
+	joystickBase2->setBackgroundSprite(Sprite::create("joystick/joystick-bg.png"));
+	joystickBase2->setThumbSprite(Sprite::create("joystick/joystick-knob.png"));
+
+	SneakyJoystick *aJoystick2 = new SneakyJoystick();
+	aJoystick2->initWithRect(joystickBaseDimensions2);
+
+	Point joystickBasePosition2;
+	joystickBasePosition2 = Vec2(visibleSize.width - joystickBase2->getContentSize().width / 2, 15 + joystickBase2->getContentSize().height / 2);
+
+	aJoystick2->autorelease();
+	joystickBase2->setJoystick(aJoystick2);
+	joystickBase2->setPosition(joystickBasePosition2);
+
+	rightJoystick = joystickBase2->getJoystick();
+	rightJoystick->retain();
+	this->addChild(joystickBase2);
+
 	Rect jumpButtonDimensions = Rect(0, 0, 64.0f, 64.0f);
 	Point jumpButtonPosition;
 	jumpButtonPosition = Vec2(visibleSize.width - 50, 30);

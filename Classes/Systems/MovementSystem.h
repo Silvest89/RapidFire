@@ -10,9 +10,10 @@ struct MovementSystem : public entityx::System<MovementSystem> {
 			this->movementCP = &movementCP;
 			this->skeletonCP = &skeletonCP;
 
-			if (movementCP.velocity.y < 0 && skeletonCP.getState() != STATE_FALLING) {
+			if (movementCP.velocity.y < -0.0f && skeletonCP.getState() != STATE_FALLING) {
 				skeletonCP.setState(STATE_FALLING);
 				setGrounded(false);
+				CCLOG("Falling");
 			}
 
 			Vec2 position(skeletonCP.skeleton->getPosition());
@@ -47,7 +48,7 @@ struct MovementSystem : public entityx::System<MovementSystem> {
 
 		auto layer = Game::getMap()->getLayer("Tile Layer 1");
 
-		float x;
+		int x;
 		if (movementCP->velocity.x > 0)
 			x = movementCP->velocity.x + rect.size.width;
 		else
@@ -69,11 +70,11 @@ struct MovementSystem : public entityx::System<MovementSystem> {
 
 		auto layer = Game::getMap()->getLayer("Tile Layer 1");
 
-		float y;
+		int y;
 		if (movementCP->velocity.y > 0)
 			y = movementCP->velocity.y + rect.getMaxY();
 		else
-			y = position.y;
+			y = position.y - movementCP->velocity.y;
 
 		auto tile = layer->getTileAt(Game::worldToTilePosition(Point(position.x + 64, y)));
 		if (tile)
@@ -82,7 +83,7 @@ struct MovementSystem : public entityx::System<MovementSystem> {
 				position.y = tile->getPositionY() - rect.size.height;
 			else
 			{
-				position.y = tile->getPositionY() + 128;;
+				position.y = tile->getPositionY() + 128;
 				setGrounded(true);
 			}
 			movementCP->velocity.y = 0;

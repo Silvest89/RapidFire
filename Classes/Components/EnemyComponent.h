@@ -1,7 +1,7 @@
 #include "CreatureComponent.h"
 
 struct EnemyComponent : public CreatureComponent {
-	EnemyComponent()
+	EnemyComponent(std::string name)
 	{
 	}
 };

@@ -212,6 +212,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\..\..\Libraries\spine-runtimes\spine-c\spine-c\src\spine\kvec.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Components\AIComponent.h" />
+    <ClInclude Include="..\Classes\Components\BulletComponent.h" />
     <ClInclude Include="..\Classes\Components\CreatureComponent.h" />
     <ClInclude Include="..\Classes\Components\EnemyComponent.h" />
     <ClInclude Include="..\Classes\Components\InputComponent.h" />
@@ -222,6 +223,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Components\RapidComponents.h" />
     <ClInclude Include="..\Classes\Components\SkeletonComponent.h" />
     <ClInclude Include="..\Classes\Components\SpriteComponent.h" />
+    <ClInclude Include="..\Classes\Components\WeaponComponent.h" />
     <ClInclude Include="..\Classes\enums.h" />
     <ClInclude Include="..\Classes\Game.h" />
     <ClInclude Include="..\Classes\GameController.h" />
@@ -239,6 +241,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\SplashScreen.h" />
     <ClInclude Include="..\Classes\Systems\InputSystem.h" />
     <ClInclude Include="..\Classes\Systems\MovementSystem.h" />
+    <ClInclude Include="..\Classes\Systems\ProjectileSystem.h" />
     <ClInclude Include="..\Classes\Systems\RenderSystem.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
